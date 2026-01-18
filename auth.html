@@ -161,7 +161,8 @@
             <button onclick="register()">Tạo tài khoản</button>
 
             <div class="switch">
-                Đã có tài khoản? <span onclick="showLogin()">Đăng nhập</span>
+                Đã có tài khoản?
+                <span onclick="showLogin()">Đăng nhập</span>
             </div>
         </div>
 
@@ -173,13 +174,14 @@
             <button onclick="login()">Đăng nhập</button>
 
             <div class="switch">
-                Chưa có tài khoản? <span onclick="showRegister()">Đăng ký</span>
+                Chưa có tài khoản?
+                <span onclick="showRegister()">Đăng ký</span>
             </div>
         </div>
 
     </div>
 
-    <!-- CHATBOT (KHÔI PHỤC Y NGUYÊN) -->
+    <!-- CHATBOT (GIỮ NGUYÊN) -->
     <div class="chatbot" id="chatbotBox">
         <iframe
             src="https://www.chatbase.co/chatbot-iframe/s4FH-Fw4P9mC2P8-8kmh1"
@@ -196,12 +198,26 @@
         const registerCard = document.getElementById("registerCard");
         const loginCard = document.getElementById("loginCard");
 
+        /* CLEAR FORM */
+        function clearRegisterForm() {
+            regUser.value = "";
+            regPass.value = "";
+            regPassConfirm.value = "";
+        }
+
+        function clearLoginForm() {
+            loginUser.value = "";
+            loginPass.value = "";
+        }
+
         function showLogin() {
+            clearRegisterForm();
             registerCard.classList.add("hidden");
             loginCard.classList.remove("hidden");
         }
 
         function showRegister() {
+            clearLoginForm();
             loginCard.classList.add("hidden");
             registerCard.classList.remove("hidden");
         }
@@ -235,6 +251,7 @@
             localStorage.setItem("users", JSON.stringify(users));
 
             alert("Đăng ký thành công 🎉");
+            clearRegisterForm();
             showLogin();
         }
 
@@ -250,6 +267,7 @@
             if (user) {
                 localStorage.setItem("isLogin", "true");
                 localStorage.setItem("currentUser", username);
+                clearLoginForm();
                 window.location.href = "trang-chu.html";
             } else {
                 alert("Sai tài khoản hoặc mật khẩu ❌");
