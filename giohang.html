@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Giỏ hàng</title>
+
+<style>
+body{
+    margin:0;
+    background:#fff7db;
+    font-family:Segoe UI, sans-serif;
+}
+
+/* NAVBAR */
+.navbar{
+    background:#ff9800;
+    color:white;
+    padding:12px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.navbar a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+/* CART */
+.cart-container{
+    max-width:700px;
+    margin:40px auto;
+    background:white;
+    padding:25px;
+    border-radius:14px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+.cart-container h2{
+    text-align:center;
+    color:#ff9800;
+}
+
+/* ITEM */
+.cart-item{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    background:#fff3c4;
+    padding:12px;
+    border-radius:12px;
+    margin-bottom:12px;
+}
+
+.cart-item img{
+    width:70px;
+    height:70px;
+    border-radius:10px;
+    object-fit:cover;
+}
+
+.cart-info{
+    flex:1;
+}
+
+.cart-info b{
+    display:block;
+}
+
+.price{
+    color:#ff9800;
+    font-weight:bold;
+}
+
+/* QTY */
+.qty-box{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.qty-box button{
+    width:26px;
+    height:26px;
+    border:none;
+    border-radius:50%;
+    background:#ffcc33;
+    cursor:pointer;
+}
+
+/* DELETE */
+.delete-btn{
+    background:#ff4d4d;
+    color:white;
+    border:none;
+    padding:6px 10px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+/* TOTAL */
+.total{
+    text-align:right;
+    margin-top:15px;
+    font-size:18px;
+}
+
+/* CHECKOUT */
+.checkout{
+    width:100%;
+    margin-top:15px;
+    padding:12px;
+    border:none;
+    border-radius:25px;
+    background:linear-gradient(135deg,#ffcc33,#ff9800);
+    font-weight:bold;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <div>🛒 Giỏ hàng</div>
+    <a href="trang-chu.html">← Tiếp tục mua</a>
+</div>
+
+<div class="cart-container">
+    <h2>Giỏ hàng của bạn</h2>
+    <div id="cartList"></div>
+    <div class="total" id="totalPrice">Tổng: 0đ</div>
+    <button class="checkout">Thanh toán</button>
+</div>
+<script src="gio-hang.js"></script>
+</body>
+</html>
