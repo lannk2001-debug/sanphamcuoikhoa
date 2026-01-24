@@ -6,121 +6,139 @@
     <title>Document</title>
     <style>
         body {
-            margin: 0;
-        }
-        .product-card {
-    text-align: center;
-    }
+    margin: 0;
+    background: #fff7ed; /* nền sáng nhẹ cùng tông cam */
+    font-family: "Segoe UI", sans-serif;
+}
 
-        .product-image img {
-        display: block;
-        margin: 0 auto;
-        max-width: 300px;
-        border-radius: 10px;
-    }
-        .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #ff9800;
-        padding: 12px 30px;
-        color: white;
-        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-    }
+/* ===== NAVBAR ===== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ff9800;
+    padding: 14px 40px;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
 
-    .navbar .logo {
-        font-size: 22px;
-        font-weight: bold;
-    }
+.navbar .logo {
+    font-size: 22px;
+    font-weight: bold;
+}
 
-    .navbar ul {
-        list-style: none;
-        display: flex;
-        margin: 0;
-        padding: 0;
-    }
-
-    .navbar ul li {
-        margin: 0 15px;
-    }
+.navbar ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    gap: 20px;
+}
 
 .navbar ul li a {
-      color: black;
-      text-decoration: none;
-      font-size: 16px;
-      font-weight: bold;
-      transition: 0.3s;
-      padding: 10px 18px;
-      border-radius: 8px;
-    }
+    color: black;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 18px;
+    border-radius: 10px;
+    transition: 0.3s;
+    background: rgba(255,255,255,0.6);
+}
 
-    .navbar ul li a:hover {
-      background-color: white;
-      color: black;
-    }
+.navbar ul li a:hover {
+    background-color: white;
+}
 
-    .navbar.buttons {
-        display: flex;
-        gap: 10px;
-    }
+/* ===== PRODUCT CARD ===== */
+.product-card {
+    max-width: 420px;
+    margin: 60px auto;
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.2);
+}
 
-        .product-title {
-        font-size: 20px;
-        font-weight: bold;
-        margin: 15px 0 5px;
-        }
-          
-        .product-price {
-        color: #ff9800;
-        font-size: 18px;
-        margin-bottom: 15px;
-        }
-        
-        .quantity {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 20px;
-        }
-        
-        .quantity input {
-        width: 60px;
-        text-align: center;
-        padding: 5px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        }
-        
-        .buttons {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        }
-        
-        .buttons button {
-        flex: 1;
-        padding: 10px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: bold;
-        }
-        
-        .add-cart {
-        background-color: #eee;
-        }
-        button.add-cart:hover {
-        background-color: #e0dedc;
-    }
-        
-        .buy-now {
-        background-color: #ff9800;
-        color: #fff;
-        }
-        button.buy-now:hover {
-        background-color: #ca7f0e;
-    }
+.product-image img {
+    max-width: 100%;
+    border-radius: 14px;
+}
+
+.product-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 18px 0 8px;
+}
+
+.product-price {
+    color: #ff9800;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 18px;
+}
+
+/* ===== QUANTITY ===== */
+.quantity {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.quantity label {
+    font-weight: 600;
+}
+
+.quantity input {
+    width: 70px;
+    text-align: center;
+    padding: 6px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* ===== BUTTONS ===== */
+.buttons {
+    display: flex;
+    gap: 14px;
+}
+
+.buttons button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+/* Thêm giỏ */
+.add-cart {
+    background-color: #f3f3f3;
+    color: #333;
+}
+
+.add-cart:hover {
+    background-color: #e0dedc;
+    transform: translateY(-2px);
+}
+
+/* Mua ngay */
+.buy-now {
+    background-color: #ff9800;
+    color: white;
+}
+
+.buy-now:hover {
+    background-color: #ca7f0e;
+    transform: translateY(-2px);
+}
     </style>
 </head>
 <body>
