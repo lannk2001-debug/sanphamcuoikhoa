@@ -12,6 +12,9 @@
       background-color: #fffbea;
     }
 .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -66,20 +69,20 @@
 
 
     .food-container {
-      display: flex;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 40px;
-      flex-wrap: wrap;
+      max-width: 1000px;
+      margin: 0 auto;
     }
 
     .food-item {
       background-color: white;
       border-radius: 15px;
       box-shadow: 0 4px 12px rgba(255, 204, 0, 0.3);
-      width: 260px;
+      border: 2px solid #ffcc00;
       overflow: hidden;
       transition: 0.3s ease;
-      border: 2px solid #ffcc00;
     }
 
     .food-item:hover {
@@ -98,34 +101,35 @@
       color: #e6a400;
       font-size: 20px;
       font-weight: 600;
-      
     }
+
     .food-item p {
       font-size: 14px;
       color: #555;
-      padding: 0 15px 20px;
-      line-height: 1.4;
+      margin-bottom: 15px;
     }
+
+    /* ===== BUTTON ===== */
     button.submit {
-    width: 30%;
-    background-color: #ff9900;
-    color: white;
-    padding: 5px;
-    border: none;
-    border-radius: 8px;
-    font-size: 15px;
-    cursor: pointer;
-    transition: 0.3s;
-    box-sizing: border-box;
-    display: inline-block;
-    margin-bottom: 15px; 
-}
-    button.submit a {
-        text-decoration: none;
-        color:white
+      width: 40%;
+      background-color: #ff9900;
+      color: white;
+      padding: 6px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-bottom: 15px;
     }
+
+    button.submit a {
+      text-decoration: none;
+      color: white;
+    }
+
     button.submit:hover {
-        background-color: #ca7f0e;
+      background-color: #ca7f0e;
     }
     .footer {
   background-color: #000;
