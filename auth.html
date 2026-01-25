@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
     <meta charset="UTF-8">
     <title>Login / Register</title>
@@ -75,9 +74,17 @@
         input {
             width: 100%;
             padding: 12px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             border-radius: 8px;
             border: 1px solid #ddd;
+        }
+
+        small {
+            display: none;
+            color: red;
+            margin-bottom: 10px;
+            display: block;
+            font-size: 13px;
         }
 
         button {
@@ -128,7 +135,6 @@
             height: 56px;
             border-radius: 50%;
             background: #ffee03;
-            color: white;
             border: none;
             font-size: 24px;
             cursor: pointer;
@@ -155,9 +161,14 @@
         <!-- REGISTER -->
         <div class="card" id="registerCard">
             <h2>Đăng ký</h2>
+
             <input type="text" id="regUser" placeholder="Tên đăng nhập">
+
             <input type="password" id="regPass" placeholder="Mật khẩu">
+            <small id="passHint">Mật khẩu phải có ít nhất 6 ký tự</small>
+
             <input type="password" id="regPassConfirm" placeholder="Nhập lại mật khẩu">
+
             <button onclick="register()">Tạo tài khoản</button>
 
             <div class="switch">
@@ -169,8 +180,10 @@
         <!-- LOGIN -->
         <div class="card hidden" id="loginCard">
             <h2>Đăng nhập</h2>
+
             <input type="text" id="loginUser" placeholder="Tên đăng nhập">
             <input type="password" id="loginPass" placeholder="Mật khẩu">
+
             <button onclick="login()">Đăng nhập</button>
 
             <div class="switch">
@@ -178,16 +191,13 @@
                 <span onclick="showRegister()">Đăng ký</span>
             </div>
         </div>
-
     </div>
 
-    <!-- CHATBOT (GIỮ NGUYÊN) -->
+    <!-- CHATBOT -->
     <div class="chatbot" id="chatbotBox">
         <iframe
             src="https://www.chatbase.co/chatbot-iframe/s4FH-Fw4P9mC2P8-8kmh1"
-            width="100%"
-            height="100%"
-            frameborder="0">
+            width="100%" height="100%" frameborder="0">
         </iframe>
     </div>
 
@@ -197,12 +207,13 @@
     <script>
         const registerCard = document.getElementById("registerCard");
         const loginCard = document.getElementById("loginCard");
+        const passHint = document.getElementById("passHint");
 
-        /* CLEAR FORM */
         function clearRegisterForm() {
             regUser.value = "";
             regPass.value = "";
             regPassConfirm.value = "";
+            passHint.style.display = "none";
         }
 
         function clearLoginForm() {
@@ -222,6 +233,16 @@
             registerCard.classList.remove("hidden");
         }
 
+        regPass.addEventListener("focus", () => {
+            passHint.style.display = "block";
+        });
+
+        regPass.addEventListener("blur", () => {
+            if (regPass.value.length >= 6) {
+                passHint.style.display = "none";
+            }
+        });
+
         function getUsers() {
             return JSON.parse(localStorage.getItem("users")) || [];
         }
@@ -233,6 +254,11 @@
 
             if (!username || !password || !confirmPassword) {
                 alert("Vui lòng nhập đầy đủ thông tin!");
+                return;
+            }
+
+            if (password.length < 6) {
+                alert("Mật khẩu phải có ít nhất 6 ký tự ❌");
                 return;
             }
 
@@ -276,7 +302,8 @@
 
         function toggleChat() {
             const chat = document.getElementById("chatbotBox");
-            chat.style.display = chat.style.display === "none" ? "block" : "none";
+            chat.style.display =
+                chat.style.display === "none" ? "block" : "none";
         }
     </script>
 
