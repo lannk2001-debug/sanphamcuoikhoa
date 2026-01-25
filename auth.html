@@ -32,7 +32,7 @@
             display: flex;
             align-items: center;
             padding: 0 30px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
             z-index: 999;
         }
 
@@ -235,7 +235,6 @@
                 return;
             }
 
-            // ✅ kiểm tra tối thiểu 6 ký tự
             if (password.length < 6) {
                 alert("Mật khẩu phải có ít nhất 6 ký tự!");
                 return;
@@ -273,6 +272,10 @@
                 localStorage.setItem("isLogin", "true");
                 localStorage.setItem("currentUser", username);
                 clearLoginForm();
+
+                // ✅ THÔNG BÁO ĐĂNG NHẬP THÀNH CÔNG
+                alert("Đăng nhập thành công 🎉");
+
                 window.location.href = "trang-chu.html";
             } else {
                 alert("Sai tài khoản hoặc mật khẩu ❌");
