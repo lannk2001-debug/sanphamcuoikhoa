@@ -59,6 +59,15 @@
         display: flex;
         gap: 10px;
     }
+    .banner {
+  width: 100%;
+  height: 280px;
+  background-image: url("./image/combo2.png"); /* kiểm tra đúng tên ảnh */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
     /* ===== DROPDOWN MENU ===== */
 .dropdown {
   position: relative;
@@ -138,17 +147,17 @@
       color: #555;
       margin-bottom: 15px;
     }
-.popular-title {
-  position: absolute;
-  top: 80px;
-  left: 30px;
-  font-size: 16px;        /* nhỏ chữ lại */
+    .popular-title {
+  font-size: 16px;
   font-weight: 600;
   color: #000;
   background-color: #fff;
-  border: 1.5px solid #000; /* viền mỏng hơn */
-  padding: 4px 10px;      /* khung gọn hơn */
-  border-radius: 5px;
+  border: 1.5px solid #000;
+  padding: 6px 12px;
+  border-radius: 6px;
+
+  width: fit-content;
+  margin: 20px ;   /*đẩy xuống */
 }
     /* ===== BUTTON ===== */
     button.submit {
@@ -188,6 +197,7 @@
 </head>
 <body>
 
+
   <!-- THANH ĐIỀU HƯỚNG -->
   <nav class="navbar">
     <div class="logo">🍔  FoodApp</div>
@@ -197,6 +207,7 @@
       <li><a href="auth.html">Đăng xuất</a></li>
     </ul>
   </nav>
+  <div class="banner"></div>
   <li class="dropdown">
     <a href="javascript:void(0)" onclick="toggleMenu()">Các món ăn ▾</a>
     <div class="dropdown-menu" id="popularMenu">
@@ -204,6 +215,7 @@
       <a href="trang-do-uong.html">Đồ uống</a>
     </div>
   </li>
+  <div class="popular-title">🔥 Menu món ăn</div>
   <!-- TRANG CHỦ -->
   <section class="home">
     <div class="food-container">
@@ -211,47 +223,47 @@
         <img src="./image/tải xuống.webp" alt="Gà rán">
         <h3>Gà rán</h3>
         <p>Giá: 40 000 vnđ</p>
-        <button class="submit"><a href="chitiet.html">Chi tiết</a></button>
+        <button class="submit"><a href="chitiet-doan.html">Chi tiết</a></button>
       </div>
       <div class="food-item">
-        <img src="./image/tải xuống (1).webp" alt="Bánh mì Việt">
-        <h3>Bánh mì Việt</h3>
-        <p>Giá: 20 000 vnđ</p>
-         <button class="submit"><a href="chitiet2.html">Chi tiết</a></button>
-      </div>
-      <div class="food-item">
-        <img src="./image/OIP.webp" alt="Bánh bao nhân xúc xích phô mai ngô">
-        <h3>Bánh bao nhân phô mai</h3>
-        <p>Giá: 30 000 vnđ</p>
-         <button class="submit"><a href="chitiet3.html">Chi tiết</a></button>
-      </div>
-      <div class="food-item">
-        <img src="./image/tải xuống (2).webp" alt="Bánh chuối">
-        <h3>Bánh chuối</h3>
-        <p>Giá: 10 000 vnđ</p>
-         <button class="submit"><a href="chitiet4.html">Chi tiết</a></button>
-      </div>
-      <div class="food-item">
-        <img src="./image/OIP (1).webp" alt="pizza">
-        <h3>pizza xúc xích</h3>
-        <p>Giá: 200 000 vnđ</p>
-         <button class="submit"><a href="chitiet5.html">Chi tiết</a></button>
-      </div>
-      <div class="food-item">
-        <img src="./image/download.webp" alt="matcha">
-        <h3>matcha</h3>
+        <img src="./image/pho.webp" alt="Phở">
+        <h3>Phở</h3>
         <p>Giá: 45 000 vnđ</p>
-         <button class="submit"><a href="chitiet6.html">Chi tiết</a></button>
+         <button class="submit"><a href="chitiet-doan2.html">Chi tiết</a></button>
+      </div>
+      <div class="food-item">
+        <img src="./image/bun-cha.webp" alt="Bún chả">
+        <h3>Bún chả</h3>
+        <p>Giá: 30 000 vnđ</p>
+         <button class="submit"><a href="chitiet-doan3.html">Chi tiết</a></button>
+      </div>
+      <div class="food-item">
+        <img src="./image/com-rang.webp" alt="Cơm rang">
+        <h3>Cơm rang</h3>
+        <p>Giá: 20 000 vnđ</p>
+         <button class="submit"><a href="chitiet-doan4.html">Chi tiết</a></button>
+      </div>
+      <div class="food-item">
+        <img src="./image/topokki.webp" alt="topokki">
+        <h3>Topokki</h3>
+        <p>Giá: 35 000 vnđ</p>
+         <button class="submit"><a href="chitiet-doan5.html">Chi tiết</a></button>
+      </div>
+      <div class="food-item">
+        <img src="./image/khoai-chien.webp" alt="khoai chiên">
+        <h3>Khoai tây chiên</h3>
+        <p>Giá: 15 000 vnđ</p>
+         <button class="submit"><a href="chitiet-doan6.html">Chi tiết</a></button>
       </div>
     </div>
     <div>
     <footer class="footer">
       <p>📍 Địa chỉ: Hà Nội, Việt Nam</p>
+      <p> Zalo: 0941155554</p>
       <p>© 2025 FoodApp - All rights reserved</p>
     </footer>
-    <div class="popular-title">🔥 Menu món ăn</div>
     </div>
   </section>
-  <script src="trang-chu.js"></script>
+  <script src="./js/trang-chu.js"></script>
 </body>
 </html>
