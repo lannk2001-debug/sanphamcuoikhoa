@@ -59,13 +59,12 @@
         display: flex;
         gap: 10px;
     }
-    .banner {
-  width: 100%;
-  height: 280px;
-  background-image: url("./image/combo2.png"); /* kiểm tra đúng tên ảnh */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+
+    .banner img {
+  width: 60%;          /* 70% – 90% tuỳ bạn */
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
     /* ===== DROPDOWN MENU ===== */
@@ -201,20 +200,23 @@
   <!-- THANH ĐIỀU HƯỚNG -->
   <nav class="navbar">
     <div class="logo">🍔  FoodApp</div>
-    <ul>  
+    <ul> 
+      <li class="dropdown">
+        <a href="javascript:void(0)" onclick="toggleMenu()">Các món ăn ▾</a>
+        <div class="dropdown-menu" id="popularMenu">
+          <a href="trang-chu.html">Trang chính</a>
+          <a href="trang-do-uong.html">Đồ uống</a>
+        </div>
+      </li>
       <li><a href="giohang.html">Giỏ hàng</a></li>
       <li><a href="lienhe.html">Liên hệ</a></li>
       <li><a href="auth.html">Đăng xuất</a></li>
     </ul>
   </nav>
-  <div class="banner"></div>
-  <li class="dropdown">
-    <a href="javascript:void(0)" onclick="toggleMenu()">Các món ăn ▾</a>
-    <div class="dropdown-menu" id="popularMenu">
-      <a href="trang-chu.html">Trang chính</a>
-      <a href="trang-do-uong.html">Đồ uống</a>
-    </div>
-  </li>
+  <div class="banner">
+    <img src="./image/combo2.png" alt="Banner combo">
+  </div>
+  
   <div class="popular-title">🔥 Menu món ăn</div>
   <!-- TRANG CHỦ -->
   <section class="home">

@@ -59,6 +59,12 @@
         display: flex;
         gap: 10px;
     }
+    .banner img {
+  width: 60%;          /* 70% – 90% tuỳ bạn */
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
     /* ===== DROPDOWN MENU ===== */
 .dropdown {
   position: relative;
@@ -138,17 +144,17 @@
       color: #555;
       margin-bottom: 15px;
     }
-.popular-title {
-  position: absolute;
-  top: 80px;
-  left: 30px;
-  font-size: 16px;        /* nhỏ chữ lại */
+    .popular-title {
+  font-size: 16px;
   font-weight: 600;
   color: #000;
   background-color: #fff;
-  border: 1.5px solid #000; /* viền mỏng hơn */
-  padding: 4px 10px;      /* khung gọn hơn */
-  border-radius: 5px;
+  border: 1.5px solid #000;
+  padding: 6px 12px;
+  border-radius: 6px;
+
+  width: fit-content;
+  margin: 20px ;   /*đẩy xuống */
 }
     /* ===== BUTTON ===== */
     button.submit {
@@ -191,19 +197,23 @@
   <!-- THANH ĐIỀU HƯỚNG -->
   <nav class="navbar">
     <div class="logo">🍔  FoodApp</div>
-    <ul>  
+    <ul> 
+      <li class="dropdown">
+        <a href="javascript:void(0)" onclick="toggleMenu()">Các đồ uống ▾</a>
+        <div class="dropdown-menu" id="popularMenu">
+          <a href="trang-chu.html">Trang chính</a>
+          <a href="trang-do-an.html">Đồ ăn</a>
+        </div>
+      </li>
       <li><a href="giohang.html">Giỏ hàng</a></li>
       <li><a href="lienhe.html">Liên hệ</a></li>
       <li><a href="auth.html">Đăng xuất</a></li>
     </ul>
   </nav>
-  <li class="dropdown">
-    <a href="javascript:void(0)" onclick="toggleMenu()">Các đồ uống ▾</a>
-    <div class="dropdown-menu" id="popularMenu">
-      <a href="trang-chu.html">Trang chính</a>
-      <a href="trang-do-an.html">Đồ ăn</a>
-    </div>
-  </li>
+  <div class="banner">
+    <img src="./image/combo2.png" alt="Banner combo">
+  </div>
+  <div class="popular-title">🔥 Menu đồ uống</div>
   <!-- TRANG CHỦ -->
   <section class="home">
     <div class="food-container">
@@ -241,7 +251,7 @@
         <img src="./image/download.webp" alt="matcha">
         <h3>matcha</h3>
         <p>Giá: 45 000 vnđ</p>
-         <button class="submit"><a href="chitiet6.html">Chi tiết</a></button>
+         <button class="submit"><a href="chitiet-douong6.html">Chi tiết</a></button>
       </div>
     </div>
     <div>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+    margin: 0;
+    background: #fff7ed; /* nền sáng nhẹ cùng tông cam */
+    font-family: "Segoe UI", sans-serif;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ff9800;
+    padding: 14px 40px;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.navbar .logo {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    gap: 20px;
+}
+
+.navbar ul li a {
+    color: black;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 18px;
+    border-radius: 10px;
+    transition: 0.3s;
+    background: rgba(255,255,255,0.6);
+}
+
+.navbar ul li a:hover {
+    background-color: white;
+}
+
+/* ===== PRODUCT CARD ===== */
+.product-card {
+    max-width: 420px;
+    margin: 60px auto;
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.2);
+}
+
+.product-image img {
+    max-width: 100%;
+    border-radius: 14px;
+}
+
+.product-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 18px 0 8px;
+}
+
+.product-price {
+    color: #ff9800;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 18px;
+}
+
+/* ===== QUANTITY ===== */
+.quantity {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.quantity label {
+    font-weight: 600;
+}
+
+.quantity input {
+    width: 70px;
+    text-align: center;
+    padding: 6px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* ===== BUTTONS ===== */
+.buttons {
+    display: flex;
+    gap: 14px;
+}
+
+.buttons button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+/* Thêm giỏ */
+.add-cart {
+    background-color: #f3f3f3;
+    color: #333;
+}
+
+.add-cart:hover {
+    background-color: #e0dedc;
+    transform: translateY(-2px);
+}
+
+/* Mua ngay */
+.buy-now {
+    background-color: #ff9800;
+    color: white;
+}
+
+.buy-now:hover {
+    background-color: #ca7f0e;
+    transform: translateY(-2px);
+}
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">🍔  FoodApp</div>
+        <ul>
+            <li><a href="trang-do-uong.html">Quay lại</a></li>
+            <li><a href="giohang.html">Giỏ hàng</a></li>
+            <li><a href="lienhe.html">Liên hệ</a></li>
+        </ul>
+    </div>
+<div class="product-card">
+    <div class="product-image">
+       <img src="./image/download.webp" alt="Sản phẩm">
+    </div>
+    <div class="product-title">matcha</div>
+    <div class="product-price">Giá: 45 000 vnđ</div>
+    <div class="quantity">
+        <label for="quantity">Số lượng:</label>
+        <input type="number" id="quantity" value="1" min="1">
+    </div>
+        <div class="buttons">
+        <button type="button" class="add-cart" id="addToCartBtn">Thêm vào giỏ hàng</button>
+        <button type="button" class="buy-now" id="buyNowBtn">Mua ngay</button>
+    </div>
+    </div>
+    <script src="./js/chi-tiet.js"></script>
+    </div>
+    </div>
+</body>
+</html>
