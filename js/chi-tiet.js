@@ -26,5 +26,15 @@ addBtn.addEventListener("click", () => {
 
 // MUA NGAY
 buyNowBtn.addEventListener("click", () => {
-    alert("✅ Mua thành công 🎉");
+    const name = document.querySelector(".product-title").innerText;
+    const priceText = document.querySelector(".product-price").innerText;
+    const price = parseInt(priceText.replace(/\D/g, ""));
+    const quantity = parseInt(document.getElementById("quantity").value);
+    const image = document.querySelector(".product-image img").src;
+
+    localStorage.setItem("buyNow", JSON.stringify({
+        name, price, quantity, image
+    }));
+
+    window.location.href = "mua-ngay.html";
 });

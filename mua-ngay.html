@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mua ngay</title>
+
+<style>
+body{
+    margin:0;
+    background:#fff7ed;
+    font-family:"Segoe UI", sans-serif;
+}
+
+/* NAVBAR */
+.navbar{
+    background:#ff9800;
+    color:white;
+    padding:12px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.navbar a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+
+/* CARD */
+.order-card{
+    max-width:420px;
+    margin:60px auto;
+    background:white;
+    padding:25px;
+    border-radius:16px;
+    box-shadow:0 18px 40px rgba(0,0,0,0.2);
+}
+
+.order-card h2{
+    text-align:center;
+    color:#ff9800;
+    margin-bottom:20px;
+}
+
+/* INFO */
+.summary{
+    background:#fff3c4;
+    padding:14px;
+    border-radius:12px;
+    margin-bottom:20px;
+}
+
+.summary div{
+    margin-bottom:6px;
+    font-weight:600;
+}
+
+/* FORM */
+input{
+    width:100%;
+    padding:12px;
+    margin-bottom:14px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    font-size:15px;
+}
+
+/* BUTTON */
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:25px;
+    background:linear-gradient(135deg,#ffcc33,#ff9800);
+    font-weight:bold;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:linear-gradient(135deg,#ffb300,#ff8c00);
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <div>🍔 FoodApp</div>
+    <a href="trang-chu.html">← Quay lại</a>
+</div>
+<div class="order-card">
+    <h2>Thông tin mua hàng</h2>
+
+    <div class="summary">
+        <div id="productName">Sản phẩm:</div>
+        <div id="productQty">Số lượng:</div>
+        <div id="productTotal">Tổng tiền:</div>
+    </div>
+
+    <input type="text" id="customerName" placeholder="Họ và tên">
+    <input type="text" id="customerPhone" placeholder="Số điện thoại">
+    <input type="text" id="customerAddress" placeholder="Địa chỉ">
+
+    <button id="confirmBuy">Mua ngay</button>
+</div>
+
+<script src="./js/mua-ngay.js"></script>
+</body>
+</html>
