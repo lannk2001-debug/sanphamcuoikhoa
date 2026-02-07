@@ -58,14 +58,26 @@ renderCart();
 const checkoutBtn = document.querySelector(".checkout");
 
 checkoutBtn.addEventListener("click", () => {
+
+    const name = document.getElementById("customerName").value.trim();
+    const phone = document.getElementById("customerPhone").value.trim();
+    const address = document.getElementById("customerAddress").value.trim();
+
+    // ❌ Thiếu thông tin
+    if (!name || !phone || !address) {
+        alert("❌ Bạn chưa điền đủ thông tin");
+        return;
+    }
+
+    // ❌ Giỏ hàng trống
     if (cart.length === 0) {
         alert("❌ Chưa thêm gì vào giỏ hàng");
         return;
     }
 
+    // ✅ OK
     alert("✅ Thanh toán thành công 🎉");
 
-    // Xóa giỏ hàng sau khi thanh toán
     cart = [];
     localStorage.removeItem("cart");
     renderCart();
