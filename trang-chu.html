@@ -178,6 +178,21 @@
     button.submit:hover {
       background-color: #ca7f0e;
     }
+    button.cart {
+      width: 50%;
+      background-color: #ff9900;
+      color: white;
+      padding: 6px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-bottom: 15px;
+    }
+    button.cart:hover {
+      background-color: #ca7f0e;
+    }
     .footer {
   background-color: #000;
   color: white;
@@ -254,18 +269,27 @@
         <h3>Gà rán</h3>
         <p>Giá: 40 000 vnđ</p>
         <button class="submit"><a href="chitiet.html">Chi tiết</a></button>
+        <button class="cart" onclick="addToCart('Gà rán',40000,'./image/tải xuống.webp')">
+          Thêm vào giỏ hàng
+        </button>
       </div>
       <div class="food-item">
         <img src="./image/tải xuống (1).webp" alt="Bánh mì Việt">
         <h3>Bánh mì Việt</h3>
         <p>Giá: 20 000 vnđ</p>
          <button class="submit"><a href="chitiet2.html">Chi tiết</a></button>
+         <button class="cart" onclick="addToCart('Bánh mì Việt',20000,'./image/tải xuống (1).webp')">
+          Thêm vào giỏ hàng
+        </button>
       </div>
       <div class="food-item">
         <img src="./image/OIP.webp" alt="Bánh bao nhân xúc xích phô mai ngô">
         <h3>Bánh bao nhân phô mai</h3>
         <p>Giá: 30 000 vnđ</p>
          <button class="submit"><a href="chitiet3.html">Chi tiết</a></button>
+         <button class="cart" onclick="addToCart('Bánh bao nhân phô mai',30000,'./image/OIP.webp')">
+          Thêm vào giỏ hàng
+        </button>
       </div>
       <div class="food-item">
         <img src="./image/tải xuống (2).webp" alt="Bánh chuối">
@@ -295,7 +319,6 @@
     </footer>
     </div>
   </section>
-
   <script src="./js/trang-chu.js"></script>
 </body>
 </html>

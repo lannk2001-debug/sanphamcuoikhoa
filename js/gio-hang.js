@@ -82,3 +82,4 @@ checkoutBtn.addEventListener("click", () => {
     localStorage.removeItem("cart");
     renderCart();
 });
+
