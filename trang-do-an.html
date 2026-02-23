@@ -180,6 +180,21 @@
     button.submit:hover {
       background-color: #ca7f0e;
     }
+    button.cart {
+      width: 50%;
+      background-color: #ff9900;
+      color: white;
+      padding: 6px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-bottom: 15px;
+    }
+    button.cart:hover {
+      background-color: #ca7f0e;
+    }
     .footer {
   background-color: #000;
   color: white;
@@ -258,36 +273,54 @@
         <h3>Gà rán</h3>
         <p>Giá: 40 000 vnđ</p>
         <button class="submit"><a href="chitiet-doan.html">Chi tiết</a></button>
+        <button class="cart" onclick="addToCart('Gà rán',40000,'./image/tải xuống.webp')">
+          Thêm vào giỏ hàng
+        </button>
       </div>
       <div class="food-item">
         <img src="./image/pho.webp" alt="Phở">
         <h3>Phở</h3>
         <p>Giá: 45 000 vnđ</p>
          <button class="submit"><a href="chitiet-doan2.html">Chi tiết</a></button>
+         <button class="cart" onclick="addToCart('Phở',45000,'./image/pho.webp')">
+          Thêm vào giỏ hàng
+        </button>
       </div>
       <div class="food-item">
         <img src="./image/bun-cha.webp" alt="Bún chả">
         <h3>Bún chả</h3>
         <p>Giá: 30 000 vnđ</p>
          <button class="submit"><a href="chitiet-doan3.html">Chi tiết</a></button>
+         <button class="cart" onclick="addToCart('Bún chả',30000,'./image/bun-cha.webp')">
+          Thêm vào giỏ hàng
+        </button>
       </div>
       <div class="food-item">
         <img src="./image/com-rang.webp" alt="Cơm rang">
         <h3>Cơm rang</h3>
         <p>Giá: 20 000 vnđ</p>
          <button class="submit"><a href="chitiet-doan4.html">Chi tiết</a></button>
+         <button class="cart" onclick="addToCart('Cơm rang',20000,'./image/com-rang.webp')">
+          Thêm vào giỏ hàng
+        </button>
       </div>
       <div class="food-item">
         <img src="./image/topokki.webp" alt="topokki">
         <h3>Topokki</h3>
         <p>Giá: 35 000 vnđ</p>
          <button class="submit"><a href="chitiet-doan5.html">Chi tiết</a></button>
+         <button class="cart" onclick="addToCart('Topokki',35000,'./image/topokki.webp')">
+          Thêm vào giỏ hàng
+        </button>
       </div>
       <div class="food-item">
         <img src="./image/khoai-chien.webp" alt="khoai chiên">
         <h3>Khoai tây chiên</h3>
         <p>Giá: 15 000 vnđ</p>
          <button class="submit"><a href="chitiet-doan6.html">Chi tiết</a></button>
+         <button class="cart" onclick="addToCart('Khoai tây chiên',15000,'./image/khoai-chien.webp')">
+          Thêm vào giỏ hàng
+        </button>
       </div>
     </div>
     <div>

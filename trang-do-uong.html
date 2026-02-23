@@ -178,6 +178,21 @@
     button.submit:hover {
       background-color: #ca7f0e;
     }
+    button.cart {
+      width: 50%;
+      background-color: #ff9900;
+      color: white;
+      padding: 6px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-bottom: 15px;
+    }
+    button.cart:hover {
+      background-color: #ca7f0e;
+    }
     .footer {
   background-color: #000;
   color: white;
@@ -190,16 +205,16 @@
   flex-direction: column;
 }
 .chatbot {
-            position: fixed;
-            bottom: 90px;
-            right: 20px;
-            width: 360px;
-            height: 520px;
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            z-index: 9999;
-            display: none;
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 360px;
+  height: 520px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  display: none;
         }
 
         .chat-toggle {
@@ -253,36 +268,54 @@
         <h3>Trà sữa</h3>
         <p>Giá: 20 000 vnđ</p>
         <button class="submit"><a href="chitiet-douong.html">Chi tiết</a></button>
+        <button class="cart" onclick="addToCart('Trà sữa',20000,'./image/milk-tea.webp')">
+          Thêm vào giỏ hàng
+        </button>
       </div>
       <div class="food-item">
         <img src="./image/nuoc-cam.webp" alt="Nước cam">
         <h3>Nước cam</h3>
         <p>Giá: 15 000 vnđ</p>
          <button class="submit"><a href="chitiet-douong2.html">Chi tiết</a></button>
+         <button class="cart" onclick="addToCart('Nước cam',15000,'./image/nuoc-cam.webp')">
+          Thêm vào giỏ hàng
+        </button>
       </div>
       <div class="food-item">
         <img src="./image/tra-chanh.webp" alt="Trà chanh">
         <h3>Trà chanh</h3>
         <p>Giá: 15 000 vnđ</p>
          <button class="submit"><a href="chitiet-douong3.html">Chi tiết</a></button>
+         <button class="cart" onclick="addToCart('Trà chanh',15000,'./image/tra-chanh.webp')">
+          Thêm vào giỏ hàng
+        </button>
       </div>
       <div class="food-item">
         <img src="./image/milk-shake.webp" alt="Milk shake">
         <h3>Milk shake vị dâu</h3>
         <p>Giá: 40 000</p>
          <button class="submit"><a href="chitiet-douong4.html">Chi tiết</a></button>
+         <button class="cart" onclick="addToCart('Milk shake vị dâu',40000,'./image/milk-shake.webp')">
+          Thêm vào giỏ hàng
+        </button>
       </div>
       <div class="food-item">
         <img src="./image/nuoc-dua hau.webp" alt="Nước dưa hấu">
         <h3>Nước dưa hấu</h3>
         <p>Giá: 15 000 vnđ</p>
          <button class="submit"><a href="chitiet-douong5.html">Chi tiết</a></button>
+         <button class="cart" onclick="addToCart('Nước dưa hấu',15000,'./image/nuoc-dua hau.webp')">
+          Thêm vào giỏ hàng
+        </button>
       </div>
       <div class="food-item">
         <img src="./image/download.webp" alt="matcha">
         <h3>matcha</h3>
         <p>Giá: 45 000 vnđ</p>
          <button class="submit"><a href="chitiet-douong6.html">Chi tiết</a></button>
+         <button class="cart" onclick="addToCart('matcha',45000,'./image/download.webp')">
+          Thêm vào giỏ hàng
+        </button>
       </div>
     </div>
     <div>
