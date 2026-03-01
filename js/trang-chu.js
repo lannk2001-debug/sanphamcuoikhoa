@@ -26,3 +26,27 @@ function addToCart(name, price, image){
 
   alert("✅ Đã thêm vào giỏ hàng!");
 }
+
+document.addEventListener("DOMContentLoaded", function(){
+
+  const container = document.querySelector(".food-container");
+  if(!container) return;
+
+  const products = JSON.parse(localStorage.getItem("products")) || [];
+
+  products.forEach(product => {
+
+      const div = document.createElement("div");
+      div.className = "food-item";
+
+      div.innerHTML = `
+          <img src="${product.image}">
+          <h3>${product.name}</h3>
+          <p>Giá: ${Number(product.price).toLocaleString()}đ</p>
+          <button class="cart">Thêm vào giỏ hàng</button>
+      `;
+
+      container.appendChild(div);
+  });
+
+});
