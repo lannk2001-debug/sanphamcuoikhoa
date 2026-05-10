@@ -34,6 +34,7 @@
         display: flex;
         margin: 0;
         padding: 0;
+        align-items: center;
     }
 
     .navbar ul li {
@@ -58,6 +59,14 @@
     .navbar.buttons {
         display: flex;
         gap: 10px;
+    }
+    .search-box input {
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 14px;
+      width: 220px;
     }
 
     /* ===== DROPDOWN MENU ===== */
@@ -251,9 +260,12 @@
       <li><a href="giohang.html">Giỏ hàng</a></li>
       <li><a href="lienhe.html">Liên hệ</a></li>
       <li><a href="auth.html">Đăng xuất</a></li>
+       <!-- SEARCH -->
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Tìm món ăn...">
+    </div>
     </ul>
   </nav>
-  
   <div class="popular-title">🔥 Menu món ăn</div>
   <!-- TRANG CHỦ -->
   <section class="home">

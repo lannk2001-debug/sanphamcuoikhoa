@@ -34,6 +34,7 @@
         display: flex;
         margin: 0;
         padding: 0;
+        align-items: center;
     }
 
     .navbar ul li {
@@ -58,6 +59,14 @@
     .navbar.buttons {
         display: flex;
         gap: 10px;
+    }
+    .search-box input {
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 14px;
+      width: 220px;
     }
     /* ===== DROPDOWN MENU ===== */
 .dropdown {
@@ -189,7 +198,7 @@
     }
     .footer {
   background-color: #000;
-  color: white;
+  color: rgb(255, 255, 255);
   text-align: center;
   padding: 20px 0;
   margin-top: 50px;
@@ -248,11 +257,11 @@
       <li><a href="giohang.html">Giỏ hàng</a></li>
       <li><a href="lienhe.html">Liên hệ</a></li>
       <li><a href="auth.html">Đăng xuất</a></li>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Tìm món ăn...">
+      </div>
     </ul>
   </nav>
-  <div class="banner">
-    <img src="./image/combo2.png" alt="Banner combo">
-  </div>
   <div class="popular-title">🔥 Menu đồ uống</div>
   <!-- TRANG CHỦ -->
   <section class="home">
@@ -313,10 +322,11 @@
       </div>
     </div>
     <div>
-      <p>📍 Địa chỉ: Hà Nội, Việt Nam</p>
-      <p> Zalo: 0941155554</p>
-      <p>© 2025 FoodApp - All rights reserved</p>
-    </footer>
+      <footer class="footer">
+        <p>📍 Địa chỉ: Hà Nội, Việt Nam</p>
+        <p> Zalo: 0941155554</p>
+        <p>© 2025 FoodApp - All rights reserved</p>
+      </footer>
     </div>
   </section>
   <script src="./js/trang-chu.js"></script>
