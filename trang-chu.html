@@ -4,43 +4,47 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Trang bán đồ ăn</title>
+
   <style>
-    /* ------------------ THANH ĐIỀU HƯỚNG ------------------ */
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #fffbea;
     }
-.navbar {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #ff9800;
-        padding: 12px 30px;
-        color: white;
-        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #ff9800;
+      padding: 12px 30px;
+      color: white;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
     }
 
     .navbar .logo {
-        font-size: 22px;
-        font-weight: bold;
+      font-size: 22px;
+      font-weight: bold;
     }
 
     .navbar ul {
-        list-style: none;
-        display: flex;
-        margin: 0;
-        padding: 0;
+      list-style: none;
+      display: flex;
+      margin: 0;
+      padding: 0;
+      align-items: center;
     }
 
     .navbar ul li {
-        margin: 0 15px;
+      margin: 0 15px;
     }
 
- .navbar ul li a {
+    .navbar ul li a {
       color: black;
       text-decoration: none;
       font-size: 16px;
@@ -55,54 +59,61 @@
       color: black;
     }
 
-    .navbar.buttons {
-        display: flex;
-        gap: 10px;
+    /* ===== SEARCH ===== */
+    .search-box input {
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 14px;
+      width: 220px;
     }
+
     .banner img {
-  width: 100%;          /* 70% – 90% tuỳ bạn */
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
-    /* ===== DROPDOWN MENU ===== */
-.dropdown {
-  position: relative;
-  border: none;
-}
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
 
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 45px;
-  left: 0;
-  background-color: #fff;
-  border: 1.5px solid #000;
-  border-radius: 6px;
-  min-width: 160px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  z-index: 999;
-}
+    /* ===== DROPDOWN ===== */
+    .dropdown {
+      position: relative;
+      border: none;
+    }
 
-.dropdown-menu a {
-  display: block;
-  padding: 10px 12px;
-  text-decoration: none;
-  color: #000;
-  font-weight: 500;
-}
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 45px;
+      left: 0;
+      background-color: #fff;
+      border: 1.5px solid #000;
+      border-radius: 6px;
+      min-width: 160px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      z-index: 999;
+    }
 
-.dropdown-menu a:hover {
-  background-color: #ff9800;
-  color: #fff;
-}
-    /* ------------------ TRANG CHỦ ------------------ */
+    .dropdown-menu a {
+      display: block;
+      padding: 10px 12px;
+      text-decoration: none;
+      color: #000;
+      font-weight: 500;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: #ff9800;
+      color: #fff;
+    }
+
+    /* ===== HOME ===== */
     .home {
       text-align: center;
       padding-top: 70px;
       background-color: #fffbea;
     }
-
 
     .food-container {
       display: grid;
@@ -144,18 +155,19 @@
       color: #555;
       margin-bottom: 15px;
     }
-    .popular-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #000;
-  background-color: #fff;
-  border: 1.5px solid #000;
-  padding: 6px 12px;
-  border-radius: 6px;
 
-  width: fit-content;
-  margin: 20px ;   /*đẩy xuống */
-}
+    .popular-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #000;
+      background-color: #fff;
+      border: 1.5px solid #000;
+      padding: 6px 12px;
+      border-radius: 6px;
+      width: fit-content;
+      margin: 20px;
+    }
+
     /* ===== BUTTON ===== */
     button.submit {
       width: 40%;
@@ -178,6 +190,7 @@
     button.submit:hover {
       background-color: #ca7f0e;
     }
+
     button.cart {
       width: 50%;
       background-color: #ff9900;
@@ -190,143 +203,168 @@
       transition: 0.3s;
       margin-bottom: 15px;
     }
+
     button.cart:hover {
       background-color: #ca7f0e;
     }
+
+    /* ===== FOOTER ===== */
     .footer {
-  background-color: #000;
-  color: white;
-  text-align: center;
-  padding: 20px 0;
-  margin-top: 50px;
-  font-size: 14px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-.chatbot {
-            position: fixed;
-            bottom: 90px;
-            right: 20px;
-            width: 360px;
-            height: 520px;
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            z-index: 9999;
-            display: none;
-        }
+      background-color: #000;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 50px;
+      font-size: 14px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
 
-        .chat-toggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: #ffee03;
-            color: white;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            z-index: 10000;
-        }
-
-        .chat-toggle:hover {
-            background: #e2dc1c;
-        }
   </style>
 </head>
+
 <body>
 
-  <!-- THANH ĐIỀU HƯỚNG -->
+  <!-- ===== NAVBAR ===== -->
   <nav class="navbar">
-    <div class="logo">🍔  FoodApp</div>
+
+    <div class="logo">🍔 FoodApp</div>
+
     <ul>
       <li class="dropdown">
         <a href="javascript:void(0)" onclick="toggleMenu()">Trang chính ▾</a>
+
         <div class="dropdown-menu" id="popularMenu">
           <a href="trang-do-an.html">Đồ ăn</a>
           <a href="trang-do-uong.html">Đồ uống</a>
         </div>
       </li>
+
       <li><a href="admin.html">Quản lý</a></li>
       <li><a href="giohang.html">Giỏ hàng</a></li>
       <li><a href="lienhe.html">Liên hệ</a></li>
       <li><a href="auth.html">Đăng xuất</a></li>
     </ul>
+
+    <!-- SEARCH -->
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Tìm món ăn...">
+    </div>
+
   </nav>
-  
+
+  <!-- ===== BANNER ===== -->
   <div class="banner">
     <img src="./image/combo2.png" alt="Banner combo">
   </div>
-  <div class="popular-title">🔥 Menu các món ăn phổ biến</div>
 
-  <!-- TRANG CHỦ -->
+  <div class="popular-title">
+    🔥 Menu các món ăn phổ biến
+  </div>
+
+  <!-- ===== HOME ===== -->
   <section class="home">
+
     <div class="food-container">
+
       <div class="food-item">
         <img src="./image/tải xuống.webp" alt="Gà rán">
         <h3>Gà rán</h3>
         <p>Giá: 40 000 vnđ</p>
-        <button class="submit"><a href="chitiet.html">Chi tiết</a></button>
-        <button class="cart" onclick="addToCart('Gà rán',40000,'./image/tải xuống.webp')">
+
+        <button class="submit">
+          <a href="chitiet.html">Chi tiết</a>
+        </button>
+
+        <button class="cart"
+          onclick="addToCart('Gà rán',40000,'./image/tải xuống.webp')">
           Thêm vào giỏ hàng
         </button>
       </div>
+
       <div class="food-item">
         <img src="./image/tải xuống (1).webp" alt="Bánh mì Việt">
         <h3>Bánh mì Việt</h3>
         <p>Giá: 20 000 vnđ</p>
-         <button class="submit"><a href="chitiet2.html">Chi tiết</a></button>
-         <button class="cart" onclick="addToCart('Bánh mì Việt',20000,'./image/tải xuống (1).webp')">
+
+        <button class="submit">
+          <a href="chitiet2.html">Chi tiết</a>
+        </button>
+
+        <button class="cart"
+          onclick="addToCart('Bánh mì Việt',20000,'./image/tải xuống (1).webp')">
           Thêm vào giỏ hàng
         </button>
       </div>
+
       <div class="food-item">
-        <img src="./image/OIP.webp" alt="Bánh bao nhân xúc xích phô mai ngô">
+        <img src="./image/OIP.webp" alt="Bánh bao">
         <h3>Bánh bao nhân phô mai</h3>
         <p>Giá: 30 000 vnđ</p>
-         <button class="submit"><a href="chitiet3.html">Chi tiết</a></button>
-         <button class="cart" onclick="addToCart('Bánh bao nhân phô mai',30000,'./image/OIP.webp')">
+
+        <button class="submit">
+          <a href="chitiet3.html">Chi tiết</a>
+        </button>
+
+        <button class="cart"
+          onclick="addToCart('Bánh bao nhân phô mai',30000,'./image/OIP.webp')">
           Thêm vào giỏ hàng
         </button>
       </div>
+
       <div class="food-item">
         <img src="./image/tải xuống (2).webp" alt="Bánh chuối">
         <h3>Bánh chuối</h3>
         <p>Giá: 10 000 vnđ</p>
-         <button class="submit"><a href="chitiet4.html">Chi tiết</a></button>
-         <button class="cart" onclick="addToCart('Bánh chuối ',10000,'./image/tải xuống (2).webp')">
+
+        <button class="submit">
+          <a href="chitiet4.html">Chi tiết</a>
+        </button>
+
+        <button class="cart"
+          onclick="addToCart('Bánh chuối',10000,'./image/tải xuống (2).webp')">
           Thêm vào giỏ hàng
         </button>
       </div>
+
       <div class="food-item">
         <img src="./image/OIP (1).webp" alt="pizza">
-        <h3>pizza xúc xích</h3>
+        <h3>Pizza xúc xích</h3>
         <p>Giá: 200 000 vnđ</p>
-         <button class="submit"><a href="chitiet5.html">Chi tiết</a></button>
-         <button class="cart" onclick="addToCart('Pizza xúc xích ',200000,'./image/OIP (1).webp')">
+
+        <button class="submit">
+          <a href="chitiet5.html">Chi tiết</a>
+        </button>
+
+        <button class="cart"
+          onclick="addToCart('Pizza xúc xích',200000,'./image/OIP (1).webp')">
           Thêm vào giỏ hàng
         </button>
       </div>
+
       <div class="food-item">
         <img src="./image/download.webp" alt="matcha">
-        <h3>matcha</h3>
+        <h3>Matcha</h3>
         <p>Giá: 45 000 vnđ</p>
-         <button class="submit"><a href="chitiet6.html">Chi tiết</a></button>
+
+        <button class="submit">
+          <a href="chitiet6.html">Chi tiết</a>
+        </button>
       </div>
+
     </div>
-    <div>
-    
+
+    <!-- ===== FOOTER ===== -->
     <footer class="footer">
       <p>📍 Địa chỉ: Hà Nội, Việt Nam</p>
-      <p> Zalo: 0941155554</p>
+      <p>Zalo: 0941155554</p>
       <p>© 2025 FoodApp - All rights reserved</p>
     </footer>
-    </div>
+
   </section>
+
   <script src="./js/trang-chu.js"></script>
+
 </body>
 </html>

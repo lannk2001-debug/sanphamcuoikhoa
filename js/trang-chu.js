@@ -50,3 +50,29 @@ document.addEventListener("DOMContentLoaded", function(){
   });
 
 });
+// ===== SEARCH PRODUCT =====
+document.addEventListener("DOMContentLoaded", function () {
+
+  const searchInput = document.getElementById("searchInput");
+
+  searchInput.addEventListener("keyup", function () {
+
+      const keyword = searchInput.value.toLowerCase();
+
+      const products = document.querySelectorAll(".food-item");
+
+      products.forEach(product => {
+
+          const productName = product.querySelector("h3").innerText.toLowerCase();
+
+          if (productName.includes(keyword)) {
+              product.style.display = "block";
+          } else {
+              product.style.display = "none";
+          }
+
+      });
+
+  });
+
+});

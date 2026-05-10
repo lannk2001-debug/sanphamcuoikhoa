@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register - Coffee Shop</title>
+
+<style>
+body {
+    background: #3e2723;
+    font-family: Arial;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.box {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+}
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+}
+button {
+    background: #6d4c41;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+}
+a { color: brown; }
+</style>
+
+</head>
+<body>
+
+<div class="box">
+    <h2>☕ Đăng ký Coffee</h2>
+
+    <input id="reg-email" placeholder="Email">
+<input id="reg-password" type="password" placeholder="Mật khẩu">
+<input id="reg-confirm" type="password" placeholder="Nhập lại mật khẩu">
+
+    <button onclick="register()">Đăng ký</button>
+
+    <p>Đã có tài khoản? <a href="login.html">Đăng nhập</a></p>
+</div>
+
+<!-- Firebase -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/12.3.0/firebase-app-compat.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/12.3.0/firebase-auth-compat.min.js"></script>
+
+<script src="firebase-config.js"></script>
+
+</body>
+</html>
