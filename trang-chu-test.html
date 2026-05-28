@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -157,6 +156,18 @@
       margin-bottom: 15px;
     }
 
+    .popular-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #000;
+      background-color: #fff;
+      border: 1.5px solid #000;
+      padding: 6px 12px;
+      border-radius: 6px;
+      width: fit-content;
+      margin: 20px;
+    }
+
     /* ===== BUTTON ===== */
     button.submit {
       width: 40%;
@@ -221,96 +232,138 @@
     <div class="logo">🍔 FoodApp</div>
 
     <ul>
-
       <li class="dropdown">
+        <a href="javascript:void(0)" onclick="toggleMenu()">Trang chính ▾</a>
 
-        <a href="javascript:void(0)"
-          onclick="toggleMenu()">
-
-          Trang chính ▾
-
-        </a>
-
-        <div class="dropdown-menu"
-          id="popularMenu">
-
-          <a href="trang-do-an.html">
-            Đồ ăn
-          </a>
-
-          <a href="trang-do-uong.html">
-            Đồ uống
-          </a>
-
+        <div class="dropdown-menu" id="popularMenu">
+          <a href="trang-do-an.html">Đồ ăn</a>
+          <a href="trang-do-uong.html">Đồ uống</a>
         </div>
-
       </li>
 
-      <li>
-        <a href="admin.html">Quản lý</a>
-      </li>
-
-      <li>
-        <a href="giohang.html">Giỏ hàng</a>
-      </li>
-
-      <li>
-        <a href="lienhe.html">Liên hệ</a>
-      </li>
-
-      <!-- SEARCH -->
-      <div class="search-box">
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="Tìm món ăn..."
-        >
-      </div>
-
-      <li>
-        <a href="register.html">
-          Đăng xuất
-        </a>
-      </li>
-
-    </ul>
-
+      <li><a href="admin.html">Quản lý</a></li>
+      <li><a href="giohang.html">Giỏ hàng</a></li>
+      <li><a href="lienhe.html">Liên hệ</a></li>
+    <!-- SEARCH -->
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Tìm món ăn...">
+    </div>
+    <li><a href="register.html">Đăng xuất</a></li>
+  </ul>
   </nav>
 
   <!-- ===== BANNER ===== -->
   <div class="banner">
-    <img src="./image/chatGPT-combo2.png"
-      alt="Banner combo">
+    <img src="./image/chatGPT-combo2.png" alt="Banner combo">
   </div>
 
   <!-- ===== HOME ===== -->
   <section class="home">
 
-    <!-- FIREBASE SẼ TỰ LOAD SẢN PHẨM -->
-    <div class="food-container"
-      id="foodContainer">
+    <div class="food-container">
+
+      <div class="food-item">
+        <img src="./image/tải xuống.webp" alt="Gà rán">
+        <h3>Gà rán</h3>
+        <p>Giá: 40 000 vnđ</p>
+
+        <button class="submit">
+          <a href="chitiet.html">Chi tiết</a>
+        </button>
+
+        <button class="cart"
+          onclick="addToCart('Gà rán',40000,'./image/tải xuống.webp')">
+          Thêm vào giỏ hàng
+        </button>
+      </div>
+
+      <div class="food-item">
+        <img src="./image/tải xuống (1).webp" alt="Bánh mì Việt">
+        <h3>Bánh mì Việt</h3>
+        <p>Giá: 20 000 vnđ</p>
+
+        <button class="submit">
+          <a href="chitiet2.html">Chi tiết</a>
+        </button>
+
+        <button class="cart"
+          onclick="addToCart('Bánh mì Việt',20000,'./image/tải xuống (1).webp')">
+          Thêm vào giỏ hàng
+        </button>
+      </div>
+
+      <div class="food-item">
+        <img src="./image/OIP.webp" alt="Bánh bao">
+        <h3>Bánh bao nhân phô mai</h3>
+        <p>Giá: 30 000 vnđ</p>
+
+        <button class="submit">
+          <a href="chitiet3.html">Chi tiết</a>
+        </button>
+
+        <button class="cart"
+          onclick="addToCart('Bánh bao nhân phô mai',30000,'./image/OIP.webp')">
+          Thêm vào giỏ hàng
+        </button>
+      </div>
+
+      <div class="food-item">
+        <img src="./image/tải xuống (2).webp" alt="Bánh chuối">
+        <h3>Bánh chuối</h3>
+        <p>Giá: 10 000 vnđ</p>
+
+        <button class="submit">
+          <a href="chitiet4.html">Chi tiết</a>
+        </button>
+
+        <button class="cart"
+          onclick="addToCart('Bánh chuối',10000,'./image/tải xuống (2).webp')">
+          Thêm vào giỏ hàng
+        </button>
+      </div>
+
+      <div class="food-item">
+        <img src="./image/OIP (1).webp" alt="pizza">
+        <h3>Pizza xúc xích</h3>
+        <p>Giá: 200 000 vnđ</p>
+
+        <button class="submit">
+          <a href="chitiet5.html">Chi tiết</a>
+        </button>
+
+        <button class="cart"
+          onclick="addToCart('Pizza xúc xích',200000,'./image/OIP (1).webp')">
+          Thêm vào giỏ hàng
+        </button>
+      </div>
+
+      <div class="food-item">
+        <img src="./image/download.webp" alt="matcha">
+        <h3>Matcha</h3>
+        <p>Giá: 45 000 vnđ</p>
+
+        <button class="submit">
+          <a href="chitiet6.html">Chi tiết</a>
+        </button>
+        <button class="cart"
+          onclick="addToCart('match',45000,'./image/download.webp')">
+          Thêm vào giỏ hàng
+        </button>
+      </div>
+      </div>
 
     </div>
 
     <!-- ===== FOOTER ===== -->
     <footer class="footer">
-
       <p>📍 Địa chỉ: Hà Nội, Việt Nam</p>
-
       <p>Zalo: 0941155554</p>
-
       <p>© 2025 FoodApp - All rights reserved</p>
-
     </footer>
 
   </section>
 
-  <!-- JS -->
-  <script type="module"
-    src="./js/trang-chu.js">
-
-  </script>
+  <script type="module" src="./js/trang-chu.js"></script>
 
 </body>
 </html>
-

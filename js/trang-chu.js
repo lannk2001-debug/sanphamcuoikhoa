@@ -1,78 +1,179 @@
-function toggleMenu() {
-    const menu = document.getElementById("popularMenu");
-    menu.style.display = (menu.style.display === "block") ? "none" : "block";
-  }
 
-(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="sMhcNocsS5DzDHnC3u7hU";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+// ===== IMPORT FIREBASE =====
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-function addToCart(name, price, image){
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  addDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+// ===== FIREBASE CONFIG =====
+const firebaseConfig = {
+  apiKey: "AIzaSyDsBxhiHjaPd0e7P_CexFue91IHFW__FKs",
+  authDomain: "sanphamcuoikhoabanhang.firebaseapp.com",
+  projectId: "sanphamcuoikhoabanhang",
+  storageBucket: "sanphamcuoikhoabanhang.firebasestorage.app",
+  messagingSenderId: "112637067003",
+  appId: "1:112637067003:web:879e801a459041721eba5e",
+  measurementId: "G-T11WF14LFP"
+};
 
-  const index = cart.findIndex(item => item.name === name);
+// ===== KHỞI TẠO FIREBASE =====
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-  if(index !== -1){
-      cart[index].quantity += 1;   // 👈 giống trang chi tiết
-  } else {
-      cart.push({
-          name: name,
-          price: price,
-          quantity: 1,            // 👈 dùng quantity, không dùng qty
-          image: image
-      });
-  }
+// ===== FOOD CONTAINER =====
+const foodContainer =
+document.getElementById("foodContainer");
 
-  localStorage.setItem("cart", JSON.stringify(cart));
+// ===== LOAD SẢN PHẨM =====
+async function loadFoods() {
 
-  alert("✅ Đã thêm vào giỏ hàng!");
+  foodContainer.innerHTML = "";
+
+  const querySnapshot =
+  await getDocs(collection(db, "sanpham"));
+
+  querySnapshot.forEach((doc) => {
+
+    const item = doc.data();
+
+    foodContainer.innerHTML += `
+
+      <div class="food-item">
+
+        <img src="${item.anh}" alt="">
+
+        <h3>${item.ten}</h3>
+
+        <p>
+          Giá: ${item.gia.toLocaleString()} vnđ
+        </p>
+
+        <button class="submit">
+
+          <a href="${item.chitiet}">
+            Chi tiết
+          </a>
+
+        </button>
+
+        <button class="cart"
+
+          onclick="
+            addToCart(
+              '${item.ten}',
+              ${item.gia},
+              '${item.anh}'
+            )
+          "
+
+        >
+
+          Thêm vào giỏ hàng
+
+        </button>
+
+      </div>
+
+    `;
+
+  });
+
 }
 
-document.addEventListener("DOMContentLoaded", function(){
+// ===== THÊM GIỎ HÀNG =====
+window.addToCart = async function (
+  ten,
+  gia,
+  anh
+) {
 
-  const container = document.querySelector(".food-container");
-  if(!container) return;
+  try {
 
-  const products = JSON.parse(localStorage.getItem("products")) || [];
+    await addDoc(
+      collection(db, "giohang"),
+      {
 
-  products.forEach(product => {
+        ten: ten,
+        gia: gia,
+        anh: anh,
+        soLuong: 1
 
-      const div = document.createElement("div");
-      div.className = "food-item";
+      }
+    );
 
-      div.innerHTML = `
-          <img src="${product.image}">
-          <h3>${product.name}</h3>
-          <p>Giá: ${Number(product.price).toLocaleString()}đ</p>
-          <button class="cart">Thêm vào giỏ hàng</button>
-      `;
+    alert("Đã thêm vào giỏ hàng!");
 
-      container.appendChild(div);
-  });
+  } catch (error) {
 
-});
-// ===== SEARCH PRODUCT =====
-document.addEventListener("DOMContentLoaded", function () {
+    console.log(error);
 
-  const searchInput = document.getElementById("searchInput");
+    alert("Lỗi thêm sản phẩm!");
 
-  searchInput.addEventListener("keyup", function () {
+  }
 
-      const keyword = searchInput.value.toLowerCase();
+};
 
-      const products = document.querySelectorAll(".food-item");
+// ===== DROPDOWN =====
+window.toggleMenu = function () {
 
-      products.forEach(product => {
+  const menu =
+  document.getElementById("popularMenu");
 
-          const productName = product.querySelector("h3").innerText.toLowerCase();
+  if (menu.style.display === "block") {
 
-          if (productName.includes(keyword)) {
-              product.style.display = "block";
-          } else {
-              product.style.display = "none";
-          }
+    menu.style.display = "none";
 
-      });
+  } else {
 
-  });
+    menu.style.display = "block";
 
-});
+  }
+
+};
+
+// ===== SEARCH =====
+const searchInput =
+document.getElementById("searchInput");
+
+searchInput.addEventListener(
+  "keyup",
+  function () {
+
+    const keyword =
+    searchInput.value.toLowerCase();
+
+    const items =
+    document.querySelectorAll(".food-item");
+
+    items.forEach(item => {
+
+      const foodName =
+      item.querySelector("h3")
+      .innerText
+      .toLowerCase();
+
+      if (
+        foodName.includes(keyword)
+      ) {
+
+        item.style.display = "block";
+
+      } else {
+
+        item.style.display = "none";
+
+      }
+
+    });
+
+  }
+);
+
+// ===== CHẠY =====
+loadFoods();

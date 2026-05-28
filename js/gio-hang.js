@@ -1,85 +1,154 @@
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+// ===== IMPORT FIREBASE =====
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  deleteDoc,
+  doc,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// ===== FIREBASE CONFIG =====
+const firebaseConfig = {
+  apiKey: "AIzaSyDsBxhiHjaPd0e7P_CexFue91IHFW__FKs",
+  authDomain: "sanphamcuoikhoabanhang.firebaseapp.com",
+  projectId: "sanphamcuoikhoabanhang",
+  storageBucket: "sanphamcuoikhoabanhang.firebasestorage.app",
+  messagingSenderId: "112637067003",
+  appId: "1:112637067003:web:879e801a459041721eba5e",
+  measurementId: "G-T11WF14LFP"
+};
+
+// ===== KHỞI TẠO =====
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 const cartList = document.getElementById("cartList");
+const totalPrice = document.getElementById("totalPrice");
 
-function renderCart(){
-    cartList.innerHTML = "";
-    let total = 0;
+// ===== LOAD GIỎ HÀNG =====
+async function loadCart() {
 
-    if(cart.length === 0){
-        cartList.innerHTML = "<p>Giỏ hàng trống 😢</p>";
-        document.getElementById("totalPrice").innerText = "Tổng: 0đ";
-        return;
-    }
+  cartList.innerHTML = "";
 
-    cart.forEach((item, index)=>{
-        total += item.price * item.quantity;
+  let total = 0;
 
-        cartList.innerHTML += `
-        <div class="cart-item">
-            <img src="${item.image}">
-            <div class="cart-info">
-                <b>${item.name}</b>
-                <span class="price">${item.price.toLocaleString()}đ</span>
-            </div>
+  const querySnapshot = await getDocs(collection(db, "giohang"));
 
-            <div class="qty-box">
-                <button onclick="changeQty(${index},-1)">-</button>
-                <span>${item.quantity}</span>
-                <button onclick="changeQty(${index},1)">+</button>
-            </div>
+  querySnapshot.forEach((documentData) => {
 
-            <button class="delete-btn" onclick="removeItem(${index})">X</button>
-        </div>`;
-    });
+    const item = documentData.data();
+    const docId = documentData.id;
 
-    document.getElementById("totalPrice").innerText =
-        "Tổng: " + total.toLocaleString() + "đ";
+    total += item.gia * item.soLuong;
+
+    cartList.innerHTML += `
+    
+      <div class="cart-item">
+
+        <img src="${item.anh}" alt="">
+
+        <div class="cart-info">
+          <b>${item.ten}</b>
+          <div class="price">
+            ${item.gia.toLocaleString()}đ
+          </div>
+        </div>
+
+        <div class="qty-box">
+
+          <button onclick="decreaseQty('${docId}', ${item.soLuong})">
+            -
+          </button>
+
+          <span>${item.soLuong}</span>
+
+          <button onclick="increaseQty('${docId}', ${item.soLuong})">
+            +
+          </button>
+
+        </div>
+
+        <button class="delete-btn"
+          onclick="deleteItem('${docId}')">
+          Xóa
+        </button>
+
+      </div>
+
+    `;
+
+  });
+
+  totalPrice.innerHTML =
+    `Tổng: ${total.toLocaleString()}đ`;
+
 }
 
-function changeQty(index, amount){
-    cart[index].quantity += amount;
-    if(cart[index].quantity < 1){
-        cart.splice(index,1);
-    }
-    saveCart();
-}
+// ===== TĂNG SỐ LƯỢNG =====
+window.increaseQty = async function (id, currentQty) {
 
-function removeItem(index){
-    cart.splice(index,1);
-    saveCart();
-}
+  const itemRef = doc(db, "giohang", id);
 
-function saveCart(){
-    localStorage.setItem("cart", JSON.stringify(cart));
-    renderCart();
-}
+  await updateDoc(itemRef, {
+    soLuong: currentQty + 1
+  });
 
-renderCart();
+  loadCart();
+
+};
+
+// ===== GIẢM SỐ LƯỢNG =====
+window.decreaseQty = async function (id, currentQty) {
+
+  if (currentQty <= 1) return;
+
+  const itemRef = doc(db, "giohang", id);
+
+  await updateDoc(itemRef, {
+    soLuong: currentQty - 1
+  });
+
+  loadCart();
+
+};
+
+// ===== XÓA =====
+window.deleteItem = async function (id) {
+
+  await deleteDoc(doc(db, "giohang", id));
+
+  loadCart();
+
+};
+
+// ===== THANH TOÁN =====
 const checkoutBtn = document.querySelector(".checkout");
 
-checkoutBtn.addEventListener("click", () => {
+checkoutBtn.addEventListener("click", async function () {
 
-    const name = document.getElementById("customerName").value.trim();
-    const phone = document.getElementById("customerPhone").value.trim();
-    const address = document.getElementById("customerAddress").value.trim();
+  const name =
+    document.getElementById("customerName").value;
 
-    // ❌ Thiếu thông tin
-    if (!name || !phone || !address) {
-        alert("❌ Bạn chưa điền đủ thông tin");
-        return;
-    }
+  const phone =
+    document.getElementById("customerPhone").value;
 
-    // ❌ Giỏ hàng trống
-    if (cart.length === 0) {
-        alert("❌ Chưa thêm gì vào giỏ hàng");
-        return;
-    }
+  const address =
+    document.getElementById("customerAddress").value;
 
-    // ✅ OK
-    alert("✅ Thanh toán thành công 🎉");
+  if (!name || !phone || !address) {
 
-    cart = [];
-    localStorage.removeItem("cart");
-    renderCart();
+    alert("Vui lòng nhập đầy đủ thông tin!");
+    return;
+
+  }
+
+  alert("Thanh toán thành công!");
+
 });
+
+// ===== LOAD KHI MỞ TRANG =====
+loadCart();
 
