@@ -7,24 +7,24 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDT3sHqd9lw5uJu32ah9qFh4CbRxR2ywJM",
-  authDomain: "spck-a05c0.firebaseapp.com",
-  projectId: "spck-a05c0",
-  storageBucket: "spck-a05c0.firebasestorage.app",
-  messagingSenderId: "434707378098",
-  appId: "1:434707378098:web:d5847d1944f955d2d97eab",
-  measurementId: "G-GD1EK3PMZ2"
+  apiKey: "AIzaSyCmJrdkAeuQVTE_t26I3bmZvRC5bySCw9s",
+  authDomain: "bandoancuoikhoa.firebaseapp.com",
+  projectId: "bandoancuoikhoa",
+  storageBucket: "bandoancuoikhoa.firebasestorage.app",
+  messagingSenderId: "872296176105",
+  appId: "1:872296176105:web:1d3d26e139244977ecd378",
+  measurementId: "G-056SSRX3CV"
 };
 
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
 
 const foodContainer = document.getElementById("foodContainer");
 
-async function loadProducts() {
+async function loadFood() {
 
-  const querySnapshot = await getDocs(collection(db, "products"));
+  const querySnapshot =
+    await getDocs(collection(db, "food"));
 
   foodContainer.innerHTML = "";
 
@@ -33,39 +33,38 @@ async function loadProducts() {
     const product = doc.data();
 
     foodContainer.innerHTML += `
-    
       <div class="food-item">
 
         <img src="${product.image}" alt="${product.name}">
 
         <h3>${product.name}</h3>
 
-        <p>Giá: ${product.price.toLocaleString()} vnđ</p>
+        <p>
+          Giá:
+          ${Number(product.price).toLocaleString()} vnđ
+        </p>
 
         <button class="submit">
-          <a href="${product.detail}">Chi tiết</a>
+          <a href="${product.detail}">
+            Chi tiết
+          </a>
         </button>
 
-        <button class="cart"
-          onclick="addToCart(
-            '${product.name}',
-            ${product.price},
-            '${product.image}'
-          )">
+        <button class="cart">
           Thêm vào giỏ hàng
         </button>
 
       </div>
-
     `;
   });
 }
 
-loadProducts();
+loadFood();
 
 window.toggleMenu = function () {
 
-  const menu = document.getElementById("popularMenu");
+  const menu =
+    document.getElementById("popularMenu");
 
   if (menu.style.display === "block") {
     menu.style.display = "none";
@@ -73,6 +72,3 @@ window.toggleMenu = function () {
     menu.style.display = "block";
   }
 };
-
-
-
