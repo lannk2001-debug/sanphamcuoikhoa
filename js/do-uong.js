@@ -46,12 +46,18 @@ async function loadDrink() {
         </p>
 
         <button class="submit">
-          <a href="${product.detail}">
+          <a href="chitiet-douong.html?id=${doc.id}">
             Chi tiết
           </a>
         </button>
 
-        <button class="cart">
+        <button
+          class="cart"
+          onclick="addToCart(
+            '${product.name}',
+            ${product.price},
+            '${product.image}'
+          )">
           Thêm vào giỏ hàng
         </button>
 
@@ -72,4 +78,25 @@ window.toggleMenu = function () {
   } else {
     menu.style.display = "block";
   }
+};
+
+// Thêm giỏ hàng
+window.addToCart = function(name, price, image) {
+
+  let cart =
+    JSON.parse(localStorage.getItem("cart")) || [];
+
+  cart.push({
+    name,
+    price,
+    image,
+    quantity: 1
+  });
+
+  localStorage.setItem(
+    "cart",
+    JSON.stringify(cart)
+  );
+
+  alert("✅ Đã thêm vào giỏ hàng");
 };

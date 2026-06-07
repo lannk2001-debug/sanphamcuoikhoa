@@ -44,10 +44,9 @@ async function loadFood() {
           ${Number(product.price).toLocaleString()} vnđ
         </p>
 
-        <button class="submit">
-          <a href="${product.detail}">
-            Chi tiết
-          </a>
+        <button class="submit"
+          onclick='showDetail(${JSON.stringify(product)})'>
+          Chi tiết
         </button>
 
         <button class="cart">
@@ -61,6 +60,16 @@ async function loadFood() {
 
 loadFood();
 
+window.showDetail = function(product) {
+
+  localStorage.setItem(
+    "foodDetail",
+    JSON.stringify(product)
+  );
+
+  window.location.href = "chitiet-doan.html";
+};
+
 window.toggleMenu = function () {
 
   const menu =
@@ -72,3 +81,4 @@ window.toggleMenu = function () {
     menu.style.display = "block";
   }
 };
+

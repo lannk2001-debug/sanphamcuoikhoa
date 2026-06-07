@@ -17,48 +17,57 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
 
 const foodContainer = document.getElementById("foodContainer");
 
 async function loadProducts() {
 
-  const querySnapshot = await getDocs(collection(db, "products"));
+  try {
 
-  foodContainer.innerHTML = "";
+    const querySnapshot = await getDocs(collection(db, "products"));
 
-  querySnapshot.forEach((doc) => {
+    foodContainer.innerHTML = "";
 
-    const product = doc.data();
+    querySnapshot.forEach((doc) => {
 
-    foodContainer.innerHTML += `
-    
-      <div class="food-item">
+      const product = doc.data();
 
-        <img src="${product.image}" alt="${product.name}">
+      foodContainer.innerHTML += `
+      
+        <div class="food-item">
 
-        <h3>${product.name}</h3>
+          <img src="${product.image}" alt="${product.name}">
 
-        <p>Giá: ${product.price.toLocaleString()} vnđ</p>
+          <h3>${product.name}</h3>
 
-        <button class="submit">
-          <a href="${product.detail}">Chi tiết</a>
-        </button>
+          <p>Giá: ${product.price.toLocaleString()} vnđ</p>
 
-        <button class="cart"
-          onclick="addToCart(
-            '${product.name}',
-            ${product.price},
-            '${product.image}'
-          )">
-          Thêm vào giỏ hàng
-        </button>
+          <button class="submit">
+            <a href="chitiet.html?id=${doc.id}">
+              Chi tiết
+            </a>
+          </button>
 
-      </div>
+          <button class="cart">
+            Thêm vào giỏ hàng
+          </button>
 
+        </div>
+
+      `;
+    });
+
+  } catch (error) {
+
+    console.error("Lỗi tải sản phẩm:", error);
+
+    foodContainer.innerHTML = `
+      <p style="color:red">
+        Không tải được dữ liệu từ Firebase
+      </p>
     `;
-  });
+  }
 }
 
 loadProducts();
@@ -73,6 +82,5 @@ window.toggleMenu = function () {
     menu.style.display = "block";
   }
 };
-
 
 
