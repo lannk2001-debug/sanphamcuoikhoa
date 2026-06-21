@@ -1,84 +1,253 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
   getFirestore,
   collection,
-  getDocs
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  getDocs,
+  doc,
+  getDoc,
+  setDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+  getAuth
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCmJrdkAeuQVTE_t26I3bmZvRC5bySCw9s",
-  authDomain: "bandoancuoikhoa.firebaseapp.com",
-  projectId: "bandoancuoikhoa",
-  storageBucket: "bandoancuoikhoa.firebasestorage.app",
-  messagingSenderId: "872296176105",
-  appId: "1:872296176105:web:1d3d26e139244977ecd378",
-  measurementId: "G-056SSRX3CV"
+  apiKey: "AIzaSyDT3sHqd9lw5uJu32ah9qFh4CbRxR2ywJM",
+  authDomain: "spck-a05c0.firebaseapp.com",
+  projectId: "spck-a05c0",
+  storageBucket: "spck-a05c0.firebasestorage.app",
+  messagingSenderId: "434707378098",
+  appId: "1:434707378098:web:d5847d1944f955d2d97eab",
+  measurementId: "G-GD1EK3PMZ2"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
-const foodContainer = document.getElementById("foodContainer");
+const foodContainer =
+document.getElementById("foodContainer");
 
-async function loadFood() {
+const searchInput =
+document.getElementById("searchInput");
 
-  const querySnapshot =
-    await getDocs(collection(db, "food"));
+let allProducts = [];
+
+function renderProducts(products) {
 
   foodContainer.innerHTML = "";
 
-  querySnapshot.forEach((doc) => {
-
-    const product = doc.data();
+  products.forEach((product) => {
 
     foodContainer.innerHTML += `
+
       <div class="food-item">
 
-        <img src="${product.image}" alt="${product.name}">
+        <img
+          src="${product.image}"
+          alt="${product.name}"
+        >
 
-        <h3>${product.name}</h3>
+        <h3>
+          ${product.name}
+        </h3>
 
         <p>
           Giá:
-          ${Number(product.price).toLocaleString()} vnđ
+          ${product.price.toLocaleString()} vnđ
         </p>
 
-        <button class="submit"
-          onclick='showDetail(${JSON.stringify(product)})'>
-          Chi tiết
+        <button class="submit">
+
+          <a href="chitiet-doan.html?id=${product.id}">
+            Chi tiết
+          </a>
+
         </button>
 
-        <button class="cart">
+        <button
+          class="cart"
+          data-id="${product.id}"
+          data-name="${product.name}"
+          data-price="${product.price}"
+          data-image="${product.image}"
+        >
+
           Thêm vào giỏ hàng
+
         </button>
 
       </div>
+
     `;
+
   });
+
 }
 
-loadFood();
+async function loadProducts() {
 
-window.showDetail = function(product) {
+  try {
 
-  localStorage.setItem(
-    "foodDetail",
-    JSON.stringify(product)
-  );
+    const querySnapshot =
+      await getDocs(
+        collection(db, "products-do-an")
+      );
 
-  window.location.href = "chitiet-doan.html";
-};
+    allProducts = [];
+
+    querySnapshot.forEach((docSnap) => {
+
+      allProducts.push({
+        id: docSnap.id,
+        ...docSnap.data()
+      });
+
+    });
+
+    renderProducts(allProducts);
+
+  } catch (error) {
+
+    console.error(
+      "Lỗi tải sản phẩm:",
+      error
+    );
+
+    foodContainer.innerHTML = `
+      <p style="color:red">
+        Không tải được dữ liệu từ Firebase
+      </p>
+    `;
+
+  }
+
+}
+
+loadProducts();
+
+searchInput.addEventListener(
+  "input",
+  () => {
+
+    const keyword =
+      searchInput.value
+      .toLowerCase()
+      .trim();
+
+    const filteredProducts =
+      allProducts.filter(
+        product =>
+          product.name
+          .toLowerCase()
+          .includes(keyword)
+      );
+
+    renderProducts(filteredProducts);
+
+  }
+);
 
 window.toggleMenu = function () {
 
   const menu =
     document.getElementById("popularMenu");
 
-  if (menu.style.display === "block") {
-    menu.style.display = "none";
-  } else {
-    menu.style.display = "block";
-  }
+  menu.style.display =
+    menu.style.display === "block"
+      ? "none"
+      : "block";
+
 };
 
+document.addEventListener(
+  "click",
+  async (e) => {
+
+    if (
+      !e.target.classList.contains("cart")
+    )
+      return;
+
+    const user =
+      auth.currentUser;
+
+    if (!user) {
+
+      alert("Vui lòng đăng nhập");
+
+      return;
+
+    }
+
+    const btn =
+      e.target;
+
+    const cartRef =
+      doc(db, "cart", user.uid);
+
+    const cartSnap =
+      await getDoc(cartRef);
+
+    let items = [];
+
+    if (cartSnap.exists()) {
+
+      items =
+        cartSnap.data().items || [];
+
+    }
+
+    const index =
+      items.findIndex(
+        item =>
+        item.productId ===
+        btn.dataset.id
+      );
+
+    if (index >= 0) {
+
+      items[index].quantity++;
+
+    } else {
+
+      items.push({
+
+        productId:
+          btn.dataset.id,
+
+        name:
+          btn.dataset.name,
+
+        image:
+          btn.dataset.image,
+
+        price:
+          Number(btn.dataset.price),
+
+        quantity:
+          1
+
+      });
+
+    }
+
+    await setDoc(
+      cartRef,
+      {
+        userId: user.uid,
+        items: items
+      }
+    );
+
+    alert(
+      "Đã thêm vào giỏ hàng!"
+    );
+
+  }
+);

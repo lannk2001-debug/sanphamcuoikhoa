@@ -1,105 +1,133 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
   getFirestore,
   doc,
   getDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAUOEZxjaICLvxc8X2th8vjQh_VC3enWdA",
-  authDomain: "bandouong-77e42.firebaseapp.com",
-  projectId: "bandouong-77e42",
-  storageBucket: "bandouong-77e42.firebasestorage.app",
-  messagingSenderId: "95549752649",
-  appId: "1:95549752649:web:6f2cfdb21b291bbe770698",
-  measurementId: "G-4S7P81N2MK"
+  apiKey: "AIzaSyDT3sHqd9lw5uJu32ah9qFh4CbRxR2ywJM",
+  authDomain: "spck-a05c0.firebaseapp.com",
+  projectId: "spck-a05c0",
+  storageBucket: "spck-a05c0.firebasestorage.app",
+  messagingSenderId: "434707378098",
+  appId: "1:434707378098:web:d5847d1944f955d2d97eab",
+  measurementId: "G-GD1EK3PMZ2"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const id =
-  new URLSearchParams(window.location.search)
-    .get("id");
+async function loadProduct() {
 
-if (!id) {
-  alert("Không tìm thấy sản phẩm");
-}
+  const productId =
+    new URLSearchParams(
+      window.location.search
+    ).get("id");
 
-const docRef = doc(db, "drink", id);
-const docSnap = await getDoc(docRef);
+  if (!productId) {
 
-if (docSnap.exists()) {
+    alert("Không tìm thấy sản phẩm");
 
-  const product = docSnap.data();
+    window.location.href =
+      "trang-do-uong.html";
 
-  document.getElementById("productImage").src =
-    product.image;
+    return;
 
-  document.getElementById("productName").innerText =
-    product.name;
+  }
 
-  document.getElementById("productPrice").innerText =
-    "Giá: " +
-    Number(product.price).toLocaleString() +
-    " vnđ";
+  try {
 
-  // Thêm giỏ hàng
-  document
-    .getElementById("addToCartBtn")
-    .addEventListener("click", () => {
-
-      const quantity =
-        Number(
-          document.getElementById("quantity").value
-        );
-
-      let cart =
-        JSON.parse(localStorage.getItem("cart")) || [];
-
-      cart.push({
-        name: product.name,
-        price: product.price,
-        image: product.image,
-        quantity: quantity
-      });
-
-      localStorage.setItem(
-        "cart",
-        JSON.stringify(cart)
+    const productRef =
+      doc(
+        db,
+        "products-do-uong",
+        productId
       );
 
-      alert("✅ Đã thêm vào giỏ hàng");
-    });
+    const productSnap =
+      await getDoc(productRef);
 
-  // Mua ngay
-  document
-    .getElementById("buyNowBtn")
-    .addEventListener("click", () => {
+    if (!productSnap.exists()) {
 
-      const quantity =
-        Number(
-          document.getElementById("quantity").value
-        );
-
-      const buyNow = {
-        name: product.name,
-        price: product.price,
-        quantity: quantity
-      };
-
-      localStorage.setItem(
-        "buyNow",
-        JSON.stringify(buyNow)
-      );
+      alert("Sản phẩm không tồn tại");
 
       window.location.href =
-        "mua-ngay.html";
-    });
+        "trang-do-uong.html";
 
-} else {
+      return;
 
-  alert("Không tìm thấy sản phẩm");
+    }
+
+    const product =
+      productSnap.data();
+
+    document.getElementById(
+      "productImage"
+    ).src =
+      product.image;
+
+    document.getElementById(
+      "productName"
+    ).innerText =
+      product.name;
+
+    document.getElementById(
+      "productPrice"
+    ).innerText =
+      "Giá: " +
+      Number(product.price)
+      .toLocaleString() +
+      " vnđ";
+
+    document
+      .getElementById("buyNowBtn")
+      .addEventListener(
+        "click",
+        () => {
+
+          const quantity =
+            parseInt(
+              document.getElementById(
+                "quantity"
+              ).value
+            ) || 1;
+
+          localStorage.setItem(
+            "buyNow",
+            JSON.stringify({
+              productId:
+                productId,
+              name:
+                product.name,
+              image:
+                product.image,
+              price:
+                product.price,
+              quantity:
+                quantity
+            })
+          );
+
+          window.location.href =
+            "mua-ngay.html";
+
+        }
+      );
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      "Lỗi tải sản phẩm"
+    );
+
+  }
 
 }
+
+loadProduct();

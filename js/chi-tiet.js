@@ -1,40 +1,145 @@
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+  getAuth
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+const firebaseConfig = {
+    apiKey: "AIzaSyDT3sHqd9lw5uJu32ah9qFh4CbRxR2ywJM",
+    authDomain: "spck-a05c0.firebaseapp.com",
+    projectId: "spck-a05c0",
+    storageBucket: "spck-a05c0.firebasestorage.app",
+    messagingSenderId: "434707378098",
+    appId: "1:434707378098:web:d5847d1944f955d2d97eab",
+    measurementId: "G-GD1EK3PMZ2"
+  };
+  
+  const app = initializeApp(firebaseConfig);
+  
+  const db = getFirestore(app);
+  
+  const auth = getAuth(app);
 const addBtn = document.getElementById("addToCartBtn");
 const buyNowBtn = document.getElementById("buyNowBtn");
 
 // THÊM VÀO GIỎ
-addBtn.addEventListener("click", () => {
-
-    const name = document.querySelector(".product-title").innerText;
-    const priceText = document.querySelector(".product-price").innerText;
-    const price = parseInt(priceText.replace(/\D/g, ""));
-    const quantity = parseInt(document.getElementById("quantity").value);
-    const image = document.querySelector(".product-image img").src;
-
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    const index = cart.findIndex(item => item.name === name);
-
-    if(index !== -1){
-        cart[index].quantity += quantity;
-    } else {
-        cart.push({ name, price, quantity, image });
+addBtn.addEventListener(
+    "click",
+    async () => {
+  
+      const user =
+        auth.currentUser;
+  
+      if (!user) {
+  
+        alert("Vui lòng đăng nhập");
+  
+        return;
+  
+      }
+  
+      const name =
+        document.getElementById("productName")
+        .innerText;
+  
+      const priceText =
+        document.getElementById("productPrice")
+        .innerText;
+  
+      const price =
+        parseInt(
+          priceText.replace(/\D/g, "")
+        );
+  
+      const quantity =
+        parseInt(
+          document.getElementById("quantity")
+          .value
+        );
+  
+      const image =
+        document.getElementById("productImage")
+        .src;
+  
+      const productId =
+        new URLSearchParams(
+          window.location.search
+        ).get("id");
+  
+      const cartRef =
+        doc(db, "cart", user.uid);
+  
+      const cartSnap =
+        await getDoc(cartRef);
+  
+      let items = [];
+  
+      if (cartSnap.exists()) {
+  
+        items =
+          cartSnap.data().items || [];
+  
+      }
+  
+      const index =
+        items.findIndex(
+          item =>
+          item.productId === productId
+        );
+  
+      if (index >= 0) {
+  
+        items[index].quantity += quantity;
+  
+      }
+      else {
+  
+        items.push({
+  
+          productId:
+            productId,
+  
+          name:
+            name,
+  
+          image:
+            image,
+  
+          price:
+            price,
+  
+          quantity:
+            quantity
+  
+        });
+  
+      }
+  
+      await setDoc(
+        cartRef,
+        {
+  
+          userId:
+            user.uid,
+  
+          items:
+            items
+  
+        }
+      );
+  
+      alert(
+        "Đã thêm vào giỏ hàng!"
+      );
+  
     }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-    alert("✅ Đã thêm vào giỏ hàng!");
-});
-
-// MUA NGAY
-buyNowBtn.addEventListener("click", () => {
-    const name = document.querySelector(".product-title").innerText;
-    const priceText = document.querySelector(".product-price").innerText;
-    const price = parseInt(priceText.replace(/\D/g, ""));
-    const quantity = parseInt(document.getElementById("quantity").value);
-    const image = document.querySelector(".product-image img").src;
-
-    localStorage.setItem("buyNow", JSON.stringify({
-        name, price, quantity, image
-    }));
-
-    window.location.href = "mua-ngay.html";
-});
+  );

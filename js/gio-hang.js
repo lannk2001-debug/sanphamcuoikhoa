@@ -1,45 +1,79 @@
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
   getFirestore,
-  collection,
-  addDoc,
-  getDocs,
+  doc,
+  getDoc,
+  setDoc,
   deleteDoc,
-  doc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  addDoc,
+  collection
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+  getAuth,
+  onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCRR1bIBvDAimHGzY-qGblRcJJDcwzRyvo",
-  authDomain: "giohangcuoikhoa.firebaseapp.com",
-  projectId: "giohangcuoikhoa",
-  storageBucket: "giohangcuoikhoa.firebasestorage.app",
-  messagingSenderId: "639316856880",
-  appId: "1:639316856880:web:7b11403bc030e9374f5df5",
-  measurementId: "G-451BE9KTTE"
+  apiKey: "AIzaSyDT3sHqd9lw5uJu32ah9qFh4CbRxR2ywJM",
+  authDomain: "spck-a05c0.firebaseapp.com",
+  projectId: "spck-a05c0",
+  storageBucket: "spck-a05c0.firebasestorage.app",
+  messagingSenderId: "434707378098",
+  appId: "1:434707378098:web:d5847d1944f955d2d97eab",
+  measurementId: "G-GD1EK3PMZ2"
 };
 
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-const cartList = document.getElementById("cartList");
-const totalPrice = document.getElementById("totalPrice");
+const auth = getAuth(app);
+
+const cartList =
+document.getElementById("cartList");
+
+const totalPrice =
+document.getElementById("totalPrice");
 
 async function loadCart() {
+
+  const user =
+    auth.currentUser;
+
+  if (!user)
+    return;
+
+  const cartRef =
+    doc(db, "cart", user.uid);
+
+  const cartSnap =
+    await getDoc(cartRef);
 
   cartList.innerHTML = "";
 
   let total = 0;
 
-  const querySnapshot = await getDocs(collection(db, "cart"));
+  if (!cartSnap.exists()) {
 
-  querySnapshot.forEach((docSnap) => {
+    totalPrice.innerHTML =
+      "Tổng: 0đ";
 
-    const item = docSnap.data();
+    return;
 
-    total += item.price;
+  }
+
+  const items =
+    cartSnap.data().items || [];
+
+  items.forEach((item, index) => {
+
+    total +=
+      item.price * item.quantity;
 
     cartList.innerHTML += `
 
@@ -48,55 +82,260 @@ async function loadCart() {
         <img src="${item.image}">
 
         <div class="cart-info">
+
           <b>${item.name}</b>
+
           <div class="price">
             ${item.price.toLocaleString()}đ
           </div>
+
         </div>
 
-        <button class="delete-btn"
-          onclick="deleteItem('${docSnap.id}')">
+        <div class="qty-box">
+
+          <button
+          onclick="minusQty(${index})">
+            -
+          </button>
+
+          <span>
+            ${item.quantity}
+          </span>
+
+          <button
+          onclick="plusQty(${index})">
+            +
+          </button>
+
+        </div>
+
+        <button
+        class="delete-btn"
+        onclick="removeItem(${index})">
           Xóa
         </button>
 
       </div>
 
     `;
+
   });
 
   totalPrice.innerHTML =
-    "Tổng: " + total.toLocaleString() + "đ";
+    `Tổng: ${total.toLocaleString()}đ`;
+
 }
 
-loadCart();
+window.plusQty = async (index) => {
 
-window.deleteItem = async function(id) {
+  const user =
+    auth.currentUser;
 
-  await deleteDoc(doc(db, "cart", id));
+  const cartRef =
+    doc(db, "cart", user.uid);
+
+  const cartSnap =
+    await getDoc(cartRef);
+
+  const items =
+    cartSnap.data().items;
+
+  items[index].quantity++;
+
+  await setDoc(
+    cartRef,
+    {
+      userId: user.uid,
+      items: items
+    }
+  );
 
   loadCart();
-}
 
-document.querySelector(".checkout")
-.addEventListener("click", async () => {
+};
 
-  const name =
-    document.getElementById("customerName").value;
+window.minusQty = async (index) => {
 
-  const phone =
-    document.getElementById("customerPhone").value;
+  const user =
+    auth.currentUser;
 
-  const address =
-    document.getElementById("customerAddress").value;
+  const cartRef =
+    doc(db, "cart", user.uid);
 
-  if (!name || !phone || !address) {
+  const cartSnap =
+    await getDoc(cartRef);
 
-    alert("Bạn chưa điền đầy đủ thông tin!");
+  const items =
+    cartSnap.data().items;
 
+  if (items[index].quantity <= 1)
     return;
+
+  items[index].quantity--;
+
+  await setDoc(
+    cartRef,
+    {
+      userId: user.uid,
+      items: items
+    }
+  );
+
+  loadCart();
+
+};
+
+window.removeItem = async (index) => {
+
+  const user =
+    auth.currentUser;
+
+  const cartRef =
+    doc(db, "cart", user.uid);
+
+  const cartSnap =
+    await getDoc(cartRef);
+
+  const items =
+    cartSnap.data().items;
+
+  items.splice(index, 1);
+
+  if (items.length === 0) {
+
+    await deleteDoc(cartRef);
+
+  } else {
+
+    await setDoc(
+      cartRef,
+      {
+        userId: user.uid,
+        items: items
+      }
+    );
+
   }
 
-  alert("Đặt hàng thành công!");
+  loadCart();
+
+};
+
+const checkoutBtn =
+document.querySelector(".checkout");
+
+checkoutBtn.addEventListener(
+  "click",
+  async () => {
+
+    const user =
+      auth.currentUser;
+
+    if (!user) {
+
+      alert("Vui lòng đăng nhập");
+
+      return;
+
+    }
+
+    const name =
+      document.getElementById("customerName").value;
+
+    const phone =
+      document.getElementById("customerPhone").value;
+
+    const address =
+      document.getElementById("customerAddress").value;
+
+    if (!name || !phone || !address) {
+
+      alert("Vui lòng nhập đầy đủ thông tin");
+
+      return;
+
+    }
+
+    const cartRef =
+      doc(db, "cart", user.uid);
+
+    const cartSnap =
+      await getDoc(cartRef);
+
+    if (!cartSnap.exists()) {
+
+      alert("Giỏ hàng trống");
+
+      return;
+
+    }
+
+    const items =
+      cartSnap.data().items || [];
+
+    let total = 0;
+
+    items.forEach((item) => {
+
+      total +=
+        item.price * item.quantity;
+
+    });
+
+    await addDoc(
+      collection(db, "orders"),
+      {
+
+        userId:
+          user.uid,
+
+        customerName:
+          name,
+
+        customerPhone:
+          phone,
+
+        customerAddress:
+          address,
+
+        total:
+          total,
+
+        status:
+          "pending",
+
+        createdAt:
+          new Date(),
+
+        items:
+          items
+
+      }
+    );
+
+    await deleteDoc(
+      cartRef
+    );
+    
+    document.getElementById("customerName").value = "";
+    document.getElementById("customerPhone").value = "";
+    document.getElementById("customerAddress").value = "";
+    
+    alert(
+      "Đặt hàng thành công!"
+    );
+    
+    loadCart();
+
+  }
+);
+
+onAuthStateChanged(auth, (user) => {
+
+  if (user) {
+
+    loadCart();
+
+  }
+
 });
-
-

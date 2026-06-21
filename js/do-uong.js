@@ -1,44 +1,61 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
   getFirestore,
   collection,
-  getDocs
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  getDocs,
+  doc,
+  getDoc,
+  setDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+  getAuth
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAUOEZxjaICLvxc8X2th8vjQh_VC3enWdA",
-  authDomain: "bandouong-77e42.firebaseapp.com",
-  projectId: "bandouong-77e42",
-  storageBucket: "bandouong-77e42.firebasestorage.app",
-  messagingSenderId: "95549752649",
-  appId: "1:95549752649:web:6f2cfdb21b291bbe770698",
-  measurementId: "G-4S7P81N2MK"
+  apiKey: "AIzaSyDT3sHqd9lw5uJu32ah9qFh4CbRxR2ywJM",
+  authDomain: "spck-a05c0.firebaseapp.com",
+  projectId: "spck-a05c0",
+  storageBucket: "spck-a05c0.firebasestorage.app",
+  messagingSenderId: "434707378098",
+  appId: "1:434707378098:web:d5847d1944f955d2d97eab",
+  measurementId: "G-GD1EK3PMZ2"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 const drinkContainer =
-  document.getElementById("drinkContainer");
+document.getElementById("drinkContainer");
 
-async function loadDrink() {
+const searchInput =
+document.getElementById("searchInput");
 
-  const querySnapshot =
-    await getDocs(collection(db, "drink"));
+let allProducts = [];
+
+function renderProducts(products) {
 
   drinkContainer.innerHTML = "";
 
-  querySnapshot.forEach((doc) => {
-
-    const product = doc.data();
+  products.forEach((product) => {
 
     drinkContainer.innerHTML += `
+
       <div class="food-item">
 
-        <img src="${product.image}" alt="${product.name}">
+        <img
+          src="${product.image}"
+          alt="${product.name}"
+        >
 
-        <h3>${product.name}</h3>
+        <h3>
+          ${product.name}
+        </h3>
 
         <p>
           Giá:
@@ -46,57 +63,235 @@ async function loadDrink() {
         </p>
 
         <button class="submit">
-          <a href="chitiet-douong.html?id=${doc.id}">
+
+          <a href="chitiet-douong.html?id=${product.id}">
             Chi tiết
           </a>
+
         </button>
 
         <button
           class="cart"
-          onclick="addToCart(
-            '${product.name}',
-            ${product.price},
-            '${product.image}'
-          )">
+          data-id="${product.id}"
+          data-name="${product.name}"
+          data-price="${product.price}"
+          data-image="${product.image}"
+        >
+
           Thêm vào giỏ hàng
+
         </button>
 
       </div>
+
     `;
+
   });
+
 }
 
-loadDrink();
+async function loadProducts() {
+
+  try {
+
+    const querySnapshot =
+      await getDocs(
+        collection(
+          db,
+          "products-do-uong"
+        )
+      );
+
+    allProducts = [];
+
+    querySnapshot.forEach((docSnap) => {
+
+      allProducts.push({
+
+        id:
+          docSnap.id,
+
+        ...docSnap.data()
+
+      });
+
+    });
+
+    renderProducts(
+      allProducts
+    );
+
+  } catch (error) {
+
+    console.error(
+      "Lỗi tải sản phẩm:",
+      error
+    );
+
+    drinkContainer.innerHTML = `
+      <p style="color:red">
+        Không tải được dữ liệu từ Firebase
+      </p>
+    `;
+
+  }
+
+}
+
+loadProducts();
+
+searchInput.addEventListener(
+  "input",
+  () => {
+
+    const keyword =
+      searchInput.value
+      .toLowerCase()
+      .trim();
+
+    const filteredProducts =
+      allProducts.filter(
+        product =>
+          product.name
+          .toLowerCase()
+          .includes(keyword)
+      );
+
+    renderProducts(
+      filteredProducts
+    );
+
+  }
+);
 
 window.toggleMenu = function () {
 
   const menu =
-    document.getElementById("popularMenu");
+    document.getElementById(
+      "popularMenu"
+    );
 
-  if (menu.style.display === "block") {
-    menu.style.display = "none";
+  if (
+    menu.style.display ===
+    "block"
+  ) {
+
+    menu.style.display =
+      "none";
+
   } else {
-    menu.style.display = "block";
+
+    menu.style.display =
+      "block";
+
   }
+
 };
 
-// Thêm giỏ hàng
-window.addToCart = function(name, price, image) {
+document.addEventListener(
+  "click",
+  async (e) => {
 
-  let cart =
-    JSON.parse(localStorage.getItem("cart")) || [];
+    if (
+      !e.target.classList.contains(
+        "cart"
+      )
+    )
+      return;
 
-  cart.push({
-    name,
-    price,
-    image,
-    quantity: 1
-  });
+    const user =
+      auth.currentUser;
 
-  localStorage.setItem(
-    "cart",
-    JSON.stringify(cart)
-  );
+    if (!user) {
 
-  alert("✅ Đã thêm vào giỏ hàng");
-};
+      alert(
+        "Vui lòng đăng nhập"
+      );
+
+      return;
+
+    }
+
+    const btn =
+      e.target;
+
+    const cartRef =
+      doc(
+        db,
+        "cart",
+        user.uid
+      );
+
+    const cartSnap =
+      await getDoc(
+        cartRef
+      );
+
+    let items = [];
+
+    if (
+      cartSnap.exists()
+    ) {
+
+      items =
+        cartSnap.data()
+        .items || [];
+
+    }
+
+    const index =
+      items.findIndex(
+        item =>
+          item.productId ===
+          btn.dataset.id
+      );
+
+    if (index >= 0) {
+
+      items[index]
+        .quantity++;
+
+    } else {
+
+      items.push({
+
+        productId:
+          btn.dataset.id,
+
+        name:
+          btn.dataset.name,
+
+        image:
+          btn.dataset.image,
+
+        price:
+          Number(
+            btn.dataset.price
+          ),
+
+        quantity:
+          1
+
+      });
+
+    }
+
+    await setDoc(
+      cartRef,
+      {
+
+        userId:
+          user.uid,
+
+        items:
+          items
+
+      }
+    );
+
+    alert(
+      "Đã thêm vào giỏ hàng!"
+    );
+
+  }
+);
