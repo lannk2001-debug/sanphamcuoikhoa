@@ -3,8 +3,14 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import {
   getFirestore,
   doc,
-  getDoc
+  getDoc,
+  setDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDT3sHqd9lw5uJu32ah9qFh4CbRxR2ywJM",
@@ -18,59 +24,99 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 const params = new URLSearchParams(window.location.search);
-
 const productId = params.get("id");
 
+/* =========================
+   LOAD PRODUCT
+========================= */
 async function loadProduct() {
-
   const docRef = doc(db, "products", productId);
-
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
-
     const product = docSnap.data();
 
-    document.getElementById("productImage").src =
-      product.image;
-
-    document.getElementById("productName").textContent =
-      product.name;
-
+    document.getElementById("productImage").src = product.image;
+    document.getElementById("productName").textContent = product.name;
     document.getElementById("productPrice").textContent =
-      "Giá: " +
-      Number(product.price).toLocaleString() +
-      " vnđ";
+      "Giá: " + Number(product.price).toLocaleString() + " vnđ";
   }
 }
 
 loadProduct();
+
+/* =========================
+   BUY NOW
+========================= */
 document.getElementById("buyNowBtn").addEventListener("click", () => {
+  const name = document.getElementById("productName").innerText;
+  const priceText = document.getElementById("productPrice").innerText;
+  const quantity = Number(document.getElementById("quantity").value);
 
-    const name =
-        document.getElementById("productName").innerText;
+  const price = Number(priceText.replace(/[^\d]/g, ""));
 
-    const priceText =
-        document.getElementById("productPrice").innerText;
+  const order = {
+    name,
+    price,
+    quantity
+  };
 
-    const quantity =
-        Number(document.getElementById("quantity").value);
+  localStorage.setItem("buyNow", JSON.stringify(order));
 
-    const price =
-        Number(priceText.replace(/[^\d]/g, ""));
+  window.location.href = "mua-ngay.html";
+});
 
-    const order = {
-        name: name,
-        price: price,
-        quantity: quantity
-    };
+/* =========================
+   ADD TO CART (GIỐNG TRANG CHỦ)
+========================= */
+const addBtn = document.getElementById("addToCartBtn");
 
-    localStorage.setItem(
-        "buyNow",
-        JSON.stringify(order)
+onAuthStateChanged(auth, (user) => {
+  if (!user) return;
+
+  addBtn.addEventListener("click", async () => {
+    const name = document.getElementById("productName").innerText;
+
+    const priceText = document.getElementById("productPrice").innerText;
+    const price = Number(priceText.replace(/[^\d]/g, ""));
+
+    const quantity = Number(document.getElementById("quantity").value);
+
+    const image = document.getElementById("productImage").src;
+
+    const cartRef = doc(db, "cart", user.uid);
+    const cartSnap = await getDoc(cartRef);
+
+    let items = [];
+
+    if (cartSnap.exists()) {
+      items = cartSnap.data().items || [];
+    }
+
+    const index = items.findIndex(
+      item => item.productId === productId
     );
 
-    window.location.href = "mua-ngay.html";
+    if (index >= 0) {
+      items[index].quantity += quantity;
+    } else {
+      items.push({
+        productId,
+        name,
+        image,
+        price,
+        quantity
+      });
+    }
+
+    await setDoc(cartRef, {
+      userId: user.uid,
+      items
+    });
+
+    alert("Đã thêm vào giỏ hàng!");
+  });
 });
